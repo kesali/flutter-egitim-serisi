@@ -14,3 +14,4 @@ Flutter kurulumu ve Flutter hakkında kısa bir giriş videosunu aşağıdaki vi
 Aşağıdaki video serisi ile ilk mini uygulamamız olan telefon rehberi uygulamasını yapıyoruz.
 
 - [1. Flutter ile telefon rehberi uygulaması yapıyoruz.](https://www.youtube.com/watch?v=mz5aoKvc-4c)
+- [2. Flutter Rehber uygulamasına kişi ekleme sayfasının eklenmesi.](https://www.youtube.com/watch?v=7OlmdKuuGt4)
