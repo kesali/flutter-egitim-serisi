@@ -15,3 +15,4 @@ Aşağıdaki video serisi ile ilk mini uygulamamız olan telefon rehberi uygulam
 
 - [1. Flutter ile telefon rehberi uygulaması yapıyoruz.](https://www.youtube.com/watch?v=mz5aoKvc-4c)
 - [2. Flutter Rehber uygulamasına kişi ekleme sayfasının eklenmesi.](https://www.youtube.com/watch?v=7OlmdKuuGt4)
+- [3. Flutter Rehber uygulamasına kişi form ekleme kayıt ve snackbar kullanımı.](https://www.youtube.com/watch?v=_Nv-ZRpq05I)
