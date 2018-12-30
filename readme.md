@@ -14,5 +14,6 @@ Flutter kurulumu ve Flutter hakkında kısa bir giriş videosunu aşağıdaki vi
 Aşağıdaki video serisi ile ilk mini uygulamamız olan telefon rehberi uygulamasını yapıyoruz.
 
 - [1. Flutter ile telefon rehberi uygulaması yapıyoruz.](https://www.youtube.com/watch?v=mz5aoKvc-4c)
-- [2. Flutter Rehber uygulamasına kişi ekleme sayfasının eklenmesi.](https://www.youtube.com/watch?v=7OlmdKuuGt4)
-- [3. Flutter Rehber uygulamasına kişi form ekleme kayıt ve snackbar kullanımı.](https://www.youtube.com/watch?v=_Nv-ZRpq05I)
+- [2. Kişi ekleme sayfasının eklenmesi.](https://www.youtube.com/watch?v=7OlmdKuuGt4)
+- [3. Kişi ekleme kayıt formu ve snackbar kullanımı.](https://www.youtube.com/watch?v=_Nv-ZRpq05I)
+- [4. Plugin ekleme - Stack Widget - Asset çağırma işlemleri.](https://www.youtube.com/watch?v=wFw4Hcvau0k)
