@@ -38,45 +38,36 @@ class _ContactPageState extends State<ContactPage> {
             Contact contact = contacts[index];
             return Dismissible(
               key: Key(contact.name),
-              background: Container(
-                color: Colors.red,
-              ),
+              background: Container(color: Colors.red,),
               onDismissed: (direction) {
                 setState(() {
                   contacts.removeAt(index);
                 });
 
                 Scaffold.of(context).showSnackBar(SnackBar(
-                  content: Text("${contact.name} deleted"),
+                  content: Text("${contact.name} has been deleted"),
                   action: SnackBarAction(
-                      label: "UNDO",
-                      onPressed: () {
-                        setState(() {
-                          contacts.add(contact);
-                        });
-                      }),
+                    label: "UNDO",
+                    onPressed: () {
+                      setState(() {
+                        contacts.add(contact);
+                      });
+                    },
+                  ),
                 ));
               },
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AddContactPage(),
-                    ),
-                  );
-                },
-                child: ListTile(
-                  leading: CircleAvatar(
-                    backgroundImage: AssetImage((contact.avatar == null || contact.avatar.isEmpty) ? "assets/img/person.jpg" : contact.avatar),
-                    child: Text(
-                      contact.name[0].toUpperCase(),
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                    ),
+              child: ListTile(
+                leading: CircleAvatar(
+                  backgroundImage: AssetImage(
+                    contact.avatar.isEmpty ? "assets/img/person.jpg" : contact.avatar,
                   ),
-                  title: Text(contact.name),
-                  subtitle: Text(contact.phoneNumber),
+                  child: Text(
+                    contact.name[0].toUpperCase(),
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
                 ),
+                title: Text(contact.name),
+                subtitle: Text(contact.phoneNumber),
               ),
             );
           }),

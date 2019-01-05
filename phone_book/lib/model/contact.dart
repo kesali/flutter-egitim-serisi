@@ -1,6 +1,7 @@
 class Contact {
   String name;
   String phoneNumber;
+  String avatar = "";
 
   static List<Contact> contacts = [
     Contact(name: "Ali Kemal", phoneNumber: "0555 555 55 55"),
@@ -18,5 +19,5 @@ class Contact {
     Contact(name: "Zeynep", phoneNumber: "0555 555 55 55"),
   ];
 
-  Contact({this.name, this.phoneNumber});
+  Contact({this.name, this.phoneNumber, this.avatar});
 }

@@ -10,11 +10,6 @@ class AddContactPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Add New Contact"),
-        leading: IconButton(
-            icon: Icon(Icons.close),
-            onPressed: () {
-              Navigator.pop(context);
-            }),
       ),
       body: SingleChildScrollView(child: AddContactForm()),
     );
@@ -28,7 +23,7 @@ class AddContactForm extends StatefulWidget {
 
 class _AddContactFormState extends State<AddContactForm> {
   final _formKey = GlobalKey<FormState>();
-  File _image;
+  File _file;
 
   @override
   Widget build(BuildContext context) {
@@ -37,26 +32,22 @@ class _AddContactFormState extends State<AddContactForm> {
 
     return Column(
       children: <Widget>[
-        Stack(
-          children: [
-            Image.asset(
-              _image == null ? "assets/img/person.jpg" : _image.path,
-              width: double.infinity,
-              height: 250,
-              fit: BoxFit.cover,
-            ),
-            Positioned(
-              bottom: 8,
+        Stack(children: [
+          Image.asset(
+            _file == null ? "assets/img/person.jpg" : _file.path,
+            fit: BoxFit.cover,
+            width: double.infinity,
+            height: 250,
+          ),
+          Positioned(
+            bottom: 8,
               right: 8,
               child: IconButton(
-                  icon: Icon(
-                    Icons.camera_alt,
-                    color: Colors.white,
-                  ),
-                  onPressed: getImage),
-            )
-          ],
-        ),
+            onPressed: getFile,
+            icon: Icon(Icons.camera_alt),
+            color: Colors.white,
+          ))
+        ]),
         Padding(
           padding: EdgeInsets.all(8),
           child: Form(
@@ -101,7 +92,7 @@ class _AddContactFormState extends State<AddContactForm> {
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
 
-                      Contact.contacts.add(Contact(name: name, phoneNumber: phoneNumber, avatar: _image == null ? "assets/img/person.jpg" : _image.path));
+                      Contact.contacts.add(Contact(name: name, phoneNumber: phoneNumber, avatar: _file == null ? "" : _file.path));
 
                       var snackBar = Scaffold.of(context).showSnackBar(
                         SnackBar(content: Text("$name has been saved")),
@@ -121,11 +112,11 @@ class _AddContactFormState extends State<AddContactForm> {
     );
   }
 
-  Future getImage() async {
+  void getFile() async {
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
 
     setState(() {
-      _image = image;
+      _file = image;
     });
   }
 }
