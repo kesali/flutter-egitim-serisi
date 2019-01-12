@@ -17,3 +17,5 @@ Aşağıdaki video serisi ile ilk mini uygulamamız olan telefon rehberi uygulam
 - [2. Kişi ekleme sayfasının eklenmesi.](https://www.youtube.com/watch?v=7OlmdKuuGt4)
 - [3. Kişi ekleme kayıt formu ve snackbar kullanımı.](https://www.youtube.com/watch?v=_Nv-ZRpq05I)
 - [4. Plugin ekleme - Stack Widget - Asset çağırma işlemleri.](https://www.youtube.com/watch?v=wFw4Hcvau0k)
+- [5. Dismissible widget ile silme işleminin yapılması.](https://youtu.be/AA45DeRydaYk)
+- [6. Sqlite ile Veri Kaydetme ve Silme İşlemlerini Ekliyoruz.](https://youtu.be/hWW9SUXdbjk)
