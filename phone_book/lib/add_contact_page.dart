@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:phone_book/database/db_helper.dart';
 import 'package:phone_book/model/contact.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -29,6 +30,13 @@ class AddContactForm extends StatefulWidget {
 class _AddContactFormState extends State<AddContactForm> {
   final _formKey = GlobalKey<FormState>();
   File _image;
+  DbHelper _dbHelper;
+
+  @override
+  void initState() {
+    _dbHelper = DbHelper();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,11 +105,12 @@ class _AddContactFormState extends State<AddContactForm> {
                   color: Colors.blue,
                   textColor: Colors.white,
                   child: Text("Submit"),
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
 
-                      Contact.contacts.add(Contact(name: name, phoneNumber: phoneNumber, avatar: _image == null ? "assets/img/person.jpg" : _image.path));
+                      await _dbHelper.insertContact(Contact(name: name, phoneNumber: phoneNumber, avatar: _image == null ? "assets/img/person.jpg" : _image
+                          .path));
 
                       var snackBar = Scaffold.of(context).showSnackBar(
                         SnackBar(content: Text("$name has been saved")),

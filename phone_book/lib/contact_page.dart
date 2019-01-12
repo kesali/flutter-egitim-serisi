@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:phone_book/add_contact_page.dart';
+import 'package:phone_book/database/db_helper.dart';
 import 'package:phone_book/model/contact.dart';
 
 class ContactPage extends StatefulWidget {
@@ -8,20 +9,16 @@ class ContactPage extends StatefulWidget {
 }
 
 class _ContactPageState extends State<ContactPage> {
-  List<Contact> contacts;
+  DbHelper _dbHelper;
 
   @override
   void initState() {
-    contacts = Contact.contacts;
+    _dbHelper = DbHelper();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    Contact.contacts.sort(
-      (Contact a, Contact b) => a.name[0].toLowerCase().compareTo(b.name[0].toLowerCase()),
-    );
-
     return Scaffold(
       appBar: AppBar(
         title: Text("Phone Book"),
@@ -32,54 +29,60 @@ class _ContactPageState extends State<ContactPage> {
         },
         child: Icon(Icons.add),
       ),
-      body: ListView.builder(
-          itemCount: contacts.length,
-          itemBuilder: (BuildContext context, int index) {
-            Contact contact = contacts[index];
-            return Dismissible(
-              key: Key(contact.name),
-              background: Container(
-                color: Colors.red,
-              ),
-              onDismissed: (direction) {
-                setState(() {
-                  contacts.removeAt(index);
-                });
+      body: FutureBuilder(
+        future: _dbHelper.getContacts(),
+        builder: (BuildContext context, AsyncSnapshot<List<Contact>> snapshot) {
+          if (!snapshot.hasData) return CircularProgressIndicator();
+          if (snapshot.data.isEmpty) return Center(child: Text("No contact found", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),));
+          return ListView.builder(
+              itemCount: snapshot.data.length,
+              itemBuilder: (BuildContext context, int index) {
+                Contact contact = snapshot.data[index];
+                return Dismissible(
+                  key: UniqueKey(),
+                  background: Container(
+                    color: Colors.red,
+                  ),
+                  onDismissed: (direction) async {
+                    await _dbHelper.removeContact(contact.id);
+                    setState(() {});
 
-                Scaffold.of(context).showSnackBar(SnackBar(
-                  content: Text("${contact.name} deleted"),
-                  action: SnackBarAction(
-                      label: "UNDO",
-                      onPressed: () {
-                        setState(() {
-                          contacts.add(contact);
-                        });
-                      }),
-                ));
-              },
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AddContactPage(),
-                    ),
-                  );
-                },
-                child: ListTile(
-                  leading: CircleAvatar(
-                    backgroundImage: AssetImage((contact.avatar == null || contact.avatar.isEmpty) ? "assets/img/person.jpg" : contact.avatar),
-                    child: Text(
-                      contact.name[0].toUpperCase(),
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    Scaffold.of(context).showSnackBar(SnackBar(
+                      content: Text("${contact.name} deleted"),
+                      action: SnackBarAction(
+                          label: "UNDO",
+                          onPressed: () async {
+                            await _dbHelper.insertContact(contact);
+
+                            setState(() {});
+                          }),
+                    ));
+                  },
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AddContactPage(),
+                        ),
+                      );
+                    },
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        backgroundImage: AssetImage((contact.avatar == null || contact.avatar.isEmpty) ? "assets/img/person.jpg" : contact.avatar),
+                        child: Text(
+                          contact.name[0].toUpperCase(),
+                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      title: Text(contact.name),
+                      subtitle: Text(contact.phoneNumber),
                     ),
                   ),
-                  title: Text(contact.name),
-                  subtitle: Text(contact.phoneNumber),
-                ),
-              ),
-            );
-          }),
+                );
+              });
+        },
+      ),
     );
   }
 }
