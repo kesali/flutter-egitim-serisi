@@ -25,7 +25,12 @@ class _ContactPageState extends State<ContactPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => AddContactPage(contact: Contact(),)));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => AddContactPage(
+                        contact: Contact(),
+                      )));
         },
         child: Icon(Icons.add),
       ),
@@ -33,7 +38,12 @@ class _ContactPageState extends State<ContactPage> {
         future: _dbHelper.getContacts(),
         builder: (BuildContext context, AsyncSnapshot<List<Contact>> snapshot) {
           if (!snapshot.hasData) return CircularProgressIndicator();
-          if (snapshot.data.isEmpty) return Center(child: Text("No contact found", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),));
+          if (snapshot.data.isEmpty)
+            return Center(
+                child: Text(
+              "No contact found",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ));
           return ListView.builder(
               itemCount: snapshot.data.length,
               itemBuilder: (BuildContext context, int index) {
@@ -44,7 +54,10 @@ class _ContactPageState extends State<ContactPage> {
                   background: Container(
                     padding: EdgeInsets.only(right: 16),
                     alignment: Alignment.centerRight,
-                    child: Icon(Icons.delete, color: Colors.white,),
+                    child: Icon(
+                      Icons.delete,
+                      color: Colors.white,
+                    ),
                     color: Colors.red,
                   ),
                   onDismissed: (direction) async {
@@ -67,7 +80,9 @@ class _ContactPageState extends State<ContactPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => AddContactPage(contact: contact,),
+                          builder: (context) => AddContactPage(
+                                contact: contact,
+                              ),
                         ),
                       );
                     },
@@ -76,9 +91,8 @@ class _ContactPageState extends State<ContactPage> {
                         backgroundImage: AssetImage((contact.avatar == null || contact.avatar.isEmpty) ? "assets/img/person.jpg" : contact.avatar),
                         child: Text(
                           contact.name[0].toUpperCase(),
-                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, shadows: [
-                            Shadow(color: Colors.grey, blurRadius: 2,offset: Offset(2, 2))
-                          ]),
+                          style:
+                              TextStyle(fontSize: 24, fontWeight: FontWeight.bold, shadows: [Shadow(color: Colors.grey, blurRadius: 2, offset: Offset(2, 2))]),
                         ),
                       ),
                       title: Text(contact.name),

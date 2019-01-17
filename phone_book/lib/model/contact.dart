@@ -6,7 +6,7 @@ class Contact {
 
   Contact({this.name, this.phoneNumber, this.avatar});
 
-  Contact.fromMap(Map<String, dynamic> map){
+  Contact.fromMap(Map<String, dynamic> map) {
     id = map["id"];
     name = map["name"];
     phoneNumber = map["phone_number"];
