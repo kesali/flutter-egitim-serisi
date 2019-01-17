@@ -1,24 +1,45 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:phone_book/database/db_helper.dart';
 import 'package:phone_book/model/contact.dart';
-import 'package:image_picker/image_picker.dart';
 
 class AddContactPage extends StatelessWidget {
+  final Contact contact;
+
+  const AddContactPage({Key key, @required this.contact}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Add New Contact"),
+        title: Text(contact == null ? "Add New Contact" : "Edit ${contact.name}"),
         leading: IconButton(
             icon: Icon(Icons.close),
             onPressed: () {
               Navigator.pop(context);
             }),
       ),
-      body: SingleChildScrollView(child: AddContactForm()),
+      body: SingleChildScrollView(child: ContactForm(contact: contact, child: AddContactForm())),
     );
+  }
+}
+
+class ContactForm extends InheritedWidget {
+  final Contact contact;
+
+  ContactForm({
+    Key key,
+    @required this.contact,
+    @required Widget child,
+  }) : super(key: key, child: child);
+
+  static ContactForm of(BuildContext context) {
+    return context.inheritFromWidgetOfExactType(ContactForm);
+  }
+
+  @override
+  bool updateShouldNotify(ContactForm oldWidget) {
+    return contact.id != oldWidget.contact.id;
   }
 }
 
@@ -29,7 +50,6 @@ class AddContactForm extends StatefulWidget {
 
 class _AddContactFormState extends State<AddContactForm> {
   final _formKey = GlobalKey<FormState>();
-  File _image;
   DbHelper _dbHelper;
 
   @override
@@ -40,15 +60,14 @@ class _AddContactFormState extends State<AddContactForm> {
 
   @override
   Widget build(BuildContext context) {
-    String name;
-    String phoneNumber;
+    Contact contact = ContactForm.of(context).contact;
 
     return Column(
       children: <Widget>[
         Stack(
           children: [
             Image.asset(
-              _image == null ? "assets/img/person.jpg" : _image.path,
+              contact.avatar == null ? "assets/img/person.jpg" : contact.avatar,
               width: double.infinity,
               height: 250,
               fit: BoxFit.cover,
@@ -76,13 +95,14 @@ class _AddContactFormState extends State<AddContactForm> {
                   padding: EdgeInsets.symmetric(vertical: 8),
                   child: TextFormField(
                     decoration: InputDecoration(hintText: "Contact Name"),
+                    initialValue: contact == null ? '' : contact.name,
                     validator: (value) {
                       if (value.isEmpty) {
                         return "Name required";
                       }
                     },
                     onSaved: (value) {
-                      name = value;
+                      contact.name = value;
                     },
                   ),
                 ),
@@ -90,6 +110,7 @@ class _AddContactFormState extends State<AddContactForm> {
                   padding: EdgeInsets.symmetric(vertical: 8),
                   child: TextFormField(
                     keyboardType: TextInputType.phone,
+                    initialValue: contact == null ? '' : contact.phoneNumber,
                     decoration: InputDecoration(hintText: "Phone Number"),
                     validator: (value) {
                       if (value.isEmpty) {
@@ -97,7 +118,7 @@ class _AddContactFormState extends State<AddContactForm> {
                       }
                     },
                     onSaved: (value) {
-                      phoneNumber = value;
+                      contact.phoneNumber = value;
                     },
                   ),
                 ),
@@ -109,11 +130,14 @@ class _AddContactFormState extends State<AddContactForm> {
                     if (_formKey.currentState.validate()) {
                       _formKey.currentState.save();
 
-                      await _dbHelper.insertContact(Contact(name: name, phoneNumber: phoneNumber, avatar: _image == null ? "assets/img/person.jpg" : _image
-                          .path));
+                      if (contact.id == null) {
+                        await _dbHelper.insertContact(contact);
+                      } else {
+                        await _dbHelper.updateContact(contact);
+                      }
 
                       var snackBar = Scaffold.of(context).showSnackBar(
-                        SnackBar(content: Text("$name has been saved")),
+                        SnackBar(content: Text("${contact.name} has been saved")),
                       );
 
                       snackBar.closed.then((onValue) {
@@ -133,8 +157,10 @@ class _AddContactFormState extends State<AddContactForm> {
   Future getImage() async {
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
 
+    Contact contact = ContactForm.of(context).contact;
+
     setState(() {
-      _image = image;
+      contact.avatar = image.path;
     });
   }
 }

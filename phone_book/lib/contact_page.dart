@@ -25,7 +25,7 @@ class _ContactPageState extends State<ContactPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => AddContactPage()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => AddContactPage(contact: Contact(),)));
         },
         child: Icon(Icons.add),
       ),
@@ -39,8 +39,12 @@ class _ContactPageState extends State<ContactPage> {
               itemBuilder: (BuildContext context, int index) {
                 Contact contact = snapshot.data[index];
                 return Dismissible(
+                  direction: DismissDirection.endToStart,
                   key: UniqueKey(),
                   background: Container(
+                    padding: EdgeInsets.only(right: 16),
+                    alignment: Alignment.centerRight,
+                    child: Icon(Icons.delete, color: Colors.white,),
                     color: Colors.red,
                   ),
                   onDismissed: (direction) async {
@@ -63,7 +67,7 @@ class _ContactPageState extends State<ContactPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => AddContactPage(),
+                          builder: (context) => AddContactPage(contact: contact,),
                         ),
                       );
                     },
@@ -72,7 +76,9 @@ class _ContactPageState extends State<ContactPage> {
                         backgroundImage: AssetImage((contact.avatar == null || contact.avatar.isEmpty) ? "assets/img/person.jpg" : contact.avatar),
                         child: Text(
                           contact.name[0].toUpperCase(),
-                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, shadows: [
+                            Shadow(color: Colors.grey, blurRadius: 2,offset: Offset(2, 2))
+                          ]),
                         ),
                       ),
                       title: Text(contact.name),
