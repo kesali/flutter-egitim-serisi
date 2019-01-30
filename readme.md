@@ -19,3 +19,4 @@ Aşağıdaki video serisi ile ilk mini uygulamamız olan telefon rehberi uygulam
 - [4. Plugin ekleme - Stack Widget - Asset çağırma işlemleri.](https://www.youtube.com/watch?v=wFw4Hcvau0k)
 - [5. Dismissible widget ile silme işleminin yapılması.](https://youtu.be/AA45DeRydaYk)
 - [6. Sqlite ile Veri Kaydetme ve Silme İşlemlerini Ekliyoruz.](https://youtu.be/hWW9SUXdbjk)
+- [7. InheritedWidget kullanımı ve Kişileri düzenleme işleminin yapılması.](https://www.youtube.com/watch?v=nteVIK5Fe_w)
