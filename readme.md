@@ -20,3 +20,4 @@ Aşağıdaki video serisi ile ilk mini uygulamamız olan telefon rehberi uygulam
 - [5. Dismissible widget ile silme işleminin yapılması.](https://youtu.be/AA45DeRydaYk)
 - [6. Sqlite ile Veri Kaydetme ve Silme İşlemlerini Ekliyoruz.](https://youtu.be/hWW9SUXdbjk)
 - [7. InheritedWidget kullanımı ve Kişileri düzenleme işleminin yapılması.](https://www.youtube.com/watch?v=nteVIK5Fe_w)
+- [8. url_launcher ile arama özelliği ve android support library yerine androidx kullanımı.](https://www.youtube.com/watch?v=ANPP7c3qpK4)
