@@ -12,12 +12,7 @@ class AddContactPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(contact.id == null ? "Add New Contact" : "Edit ${contact.name}"),
-        leading: IconButton(
-            icon: Icon(Icons.close),
-            onPressed: () {
-              Navigator.pop(context);
-            }),
+        title: Text(contact.id == null ? "Add New Contact" : contact.name),
       ),
       body: SingleChildScrollView(child: ContactForm(contact: contact, child: AddContactForm())),
     );
@@ -27,11 +22,7 @@ class AddContactPage extends StatelessWidget {
 class ContactForm extends InheritedWidget {
   final Contact contact;
 
-  ContactForm({
-    Key key,
-    @required this.contact,
-    @required Widget child,
-  }) : super(key: key, child: child);
+  ContactForm({Key key, @required Widget child, @required this.contact}) : super(key: key, child: child);
 
   static ContactForm of(BuildContext context) {
     return context.inheritFromWidgetOfExactType(ContactForm);
@@ -64,26 +55,22 @@ class _AddContactFormState extends State<AddContactForm> {
 
     return Column(
       children: <Widget>[
-        Stack(
-          children: [
-            Image.asset(
-              contact.avatar == null ? "assets/img/person.jpg" : contact.avatar,
-              width: double.infinity,
-              height: 250,
-              fit: BoxFit.cover,
-            ),
-            Positioned(
+        Stack(children: [
+          Image.asset(
+            contact.avatar == null ? "assets/img/person.jpg" : contact.avatar,
+            fit: BoxFit.cover,
+            width: double.infinity,
+            height: 250,
+          ),
+          Positioned(
               bottom: 8,
               right: 8,
               child: IconButton(
-                  icon: Icon(
-                    Icons.camera_alt,
-                    color: Colors.white,
-                  ),
-                  onPressed: getImage),
-            )
-          ],
-        ),
+                onPressed: getFile,
+                icon: Icon(Icons.camera_alt),
+                color: Colors.white,
+              ))
+        ]),
         Padding(
           padding: EdgeInsets.all(8),
           child: Form(
@@ -110,8 +97,8 @@ class _AddContactFormState extends State<AddContactForm> {
                   padding: EdgeInsets.symmetric(vertical: 8),
                   child: TextFormField(
                     keyboardType: TextInputType.phone,
-                    initialValue: contact.phoneNumber,
                     decoration: InputDecoration(hintText: "Phone Number"),
+                    initialValue: contact.phoneNumber,
                     validator: (value) {
                       if (value.isEmpty) {
                         return "Phone Number required";
@@ -154,7 +141,7 @@ class _AddContactFormState extends State<AddContactForm> {
     );
   }
 
-  Future getImage() async {
+  void getFile() async {
     Contact contact = ContactForm.of(context).contact;
 
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
