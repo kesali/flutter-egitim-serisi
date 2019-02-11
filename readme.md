@@ -21,3 +21,9 @@ Aşağıdaki video serisi ile ilk mini uygulamamız olan telefon rehberi uygulam
 - [6. Sqlite ile Veri Kaydetme ve Silme İşlemlerini Ekliyoruz.](https://youtu.be/hWW9SUXdbjk)
 - [7. InheritedWidget kullanımı ve Kişileri düzenleme işleminin yapılması.](https://www.youtube.com/watch?v=nteVIK5Fe_w)
 - [8. url_launcher ile arama özelliği ve android support library yerine androidx kullanımı.](https://www.youtube.com/watch?v=ANPP7c3qpK4)
+
+## Flutter ile alışveriş listesi uygulaması yapıyoruz.
+
+Aşağıdaki video serisi alışveriş listesi uygulamasını yapıyoruz.
+
+- [1. ThemeData, PageView Kullanımı ve proje oluşturma..](https://www.youtube.com/watch?v=JnU27OYGkqQ)
