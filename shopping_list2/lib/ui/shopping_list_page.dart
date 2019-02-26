@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_list1/ui/dialog/item_dialog.dart';
+import 'package:shopping_list/ui/dialog/item_dialog.dart';
 
 class ShoppingListPage extends StatefulWidget {
   @override
