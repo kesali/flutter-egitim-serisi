@@ -13,4 +13,12 @@ class Item {
         isCompleted: map['isCompleted'],
         isArchived: map['isArchived']);
   }
+
+  Map toMap(){
+    var map = Map<String, dynamic>();
+    map['name'] = name;
+    map['isArchived'] = isArchived;
+    map['isCompleted'] = isCompleted;
+    return map;
+  }
 }

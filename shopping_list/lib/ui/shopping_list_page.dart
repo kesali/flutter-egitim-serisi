@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_list/http/item_service.dart';
+import 'package:shopping_list/model/item.dart';
 import 'package:shopping_list/ui/dialog/item_dialog.dart';
 import 'package:shopping_list/ui/shopping_list_items_page.dart';
 
@@ -9,11 +11,14 @@ class ShoppingListPage extends StatefulWidget {
 
 class _ShoppingListPage extends State<ShoppingListPage> {
   int _selectedIndex = 0;
-
+  ItemService _itemService;
   PageController _pageController = PageController();
+  final _scaffoldState = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
+    _itemService = ItemService();
+
     _pageController.addListener(() {
       final int currentIndex = _pageController.page.round();
       if (currentIndex != _selectedIndex) {
@@ -29,6 +34,7 @@ class _ShoppingListPage extends State<ShoppingListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldState,
       appBar: AppBar(
         title: Text('Shopping List'),
       ),
@@ -50,9 +56,23 @@ class _ShoppingListPage extends State<ShoppingListPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          var name = await showDialog(
+          String name = await showDialog(
               context: context,
               builder: (BuildContext context) => ItemDialog());
+
+          if (name.isNotEmpty) {
+            var item = Item(name: name, isArchived: false, isCompleted: false);
+
+            try {
+              await _itemService.addItem(item);
+
+              setState(() {});
+            } catch (ex) {
+              _scaffoldState.currentState.showSnackBar(
+                SnackBar(content: Text(ex.toString())),
+              );
+            }
+          }
         },
         child: Icon(Icons.add),
       ),

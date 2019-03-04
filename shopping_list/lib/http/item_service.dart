@@ -17,4 +17,17 @@ class ItemService {
       throw Exception('Failed to load items');
     }
   }
+
+  Future<Item> addItem(Item item) async {
+    final response = await http.post(_serviceUrl, headers: {
+      "content-type" : "application/json"
+    }, body: json.encode(item.toMap()));
+
+    if (response.statusCode == 201) {
+      Map<String, dynamic> item = json.decode(response.body);
+      return Item.fromJson(item);
+    } else {
+      throw Exception('Failed to add item');
+    }
+  }
 }
