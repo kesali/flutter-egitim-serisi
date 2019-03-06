@@ -29,4 +29,4 @@ Aşağıdaki video serisi alışveriş listesi uygulamasını yapıyoruz.
 - [1. ThemeData, PageView Kullanımı ve proje oluşturma.](https://www.youtube.com/watch?v=JnU27OYGkqQ)
 - [2. Dialog BottomNavigationBar kullanımı ve Navigator ile veri iletişimi.](https://www.youtube.com/watch?v=A_7H8suyj1s)
 - [3. Http kütüphanesi üzerinden servis ile veri haberleşmesi.](https://www.youtube.com/watch?v=dzwR2mWwh8c)
-- [4. THttp kütüphanesini kullanarak servise veri kaydetme Http post işlemi.](https://www.youtube.com/watch?v=TiCQWj5R9Wg)
+- [4. Http kütüphanesini kullanarak servise veri kaydetme Http post işlemi.](https://www.youtube.com/watch?v=TiCQWj5R9Wg)
