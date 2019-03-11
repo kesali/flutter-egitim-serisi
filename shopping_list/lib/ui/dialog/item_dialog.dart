@@ -41,9 +41,7 @@ class _ItemDialogState extends State<ItemDialog> {
               alignment: Alignment.centerRight,
               child: FlatButton(
                   onPressed: () => _submitDialog(context),
-                  child: Text(
-                    "Add item to list",
-                  ),
+                  child: Text("Add item to list"),
                   color: Theme.of(context).accentColor),
             )
           ]))

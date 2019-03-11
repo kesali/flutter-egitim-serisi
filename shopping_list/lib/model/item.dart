@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Item {
   int id;
   String name;
@@ -14,11 +16,11 @@ class Item {
         isArchived: map['isArchived']);
   }
 
-  Map toMap(){
+  String toJson() {
     var map = Map<String, dynamic>();
     map['name'] = name;
     map['isArchived'] = isArchived;
     map['isCompleted'] = isCompleted;
-    return map;
+    return json.encode(map);
   }
 }

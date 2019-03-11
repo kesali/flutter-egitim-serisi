@@ -19,15 +19,26 @@ class ItemService {
   }
 
   Future<Item> addItem(Item item) async {
-    final response = await http.post(_serviceUrl, headers: {
-      "content-type" : "application/json"
-    }, body: json.encode(item.toMap()));
+    final response = await http.post(_serviceUrl,
+        headers: {"content-type": "application/json"}, body: item.toJson());
 
     if (response.statusCode == 201) {
       Map<String, dynamic> item = json.decode(response.body);
       return Item.fromJson(item);
     } else {
       throw Exception('Failed to add item');
+    }
+  }
+
+  Future<Item> editItem(Item item) async {
+    final response = await http.patch("$_serviceUrl${item.id}",
+        headers: {"content-type": "application/json"}, body: item.toJson());
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> item = json.decode(response.body);
+      return Item.fromJson(item);
+    } else {
+      throw Exception('Failed to update item');
     }
   }
 }
