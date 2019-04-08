@@ -7,44 +7,43 @@ class ItemDialog extends StatefulWidget {
 
 class _ItemDialogState extends State<ItemDialog> {
   final _formKey = GlobalKey<FormState>();
-
   String _itemName;
-
-  void _submitDialog(BuildContext context) {
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
-
-      Navigator.of(context).pop(_itemName);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
-    return SimpleDialog(title: Text("Add your items"), children: [
-      Container(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          child: Column(children: [
-            Form(
+    return SimpleDialog(
+      title: Text("Add your shopping item."),
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 24),
+          child: Column(
+            children: <Widget>[
+              Form(
                 key: _formKey,
                 child: TextFormField(
+                  maxLength: 50,
+                  onSaved: (value)=>_itemName = value,
                   autofocus: true,
-                  maxLength: 25,
-                  onSaved: (value) => _itemName = value,
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return "item name is empty";
+                  validator: (value){
+                    if(value.isEmpty){
+                      return "valdiation error";
                     }
                   },
-                )),
-            const SizedBox(height: 16.0),
-            Align(
-              alignment: Alignment.centerRight,
-              child: FlatButton(
-                  onPressed: () => _submitDialog(context),
-                  child: Text("Add item to list"),
-                  color: Theme.of(context).accentColor),
-            )
-          ]))
-    ]);
+                ),),
+              SizedBox(height: 16,),
+              FlatButton(child: Text("Add item to shopping list"), onPressed: _saveForm,
+              color: Theme.of(context).accentColor,)
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
+  void _saveForm() {
+    _formKey.currentState.save();
+    if(_formKey.currentState.validate()){
+      Navigator.pop(context, _itemName);
+    }
   }
 }

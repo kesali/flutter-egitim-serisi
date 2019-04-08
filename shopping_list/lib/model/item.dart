@@ -10,17 +10,18 @@ class Item {
 
   factory Item.fromJson(Map<String, dynamic> map) {
     return Item(
-        id: map['id'],
-        name: map['name'],
-        isCompleted: map['isCompleted'],
-        isArchived: map['isArchived']);
+      id: map['id'],
+      name: map['name'],
+      isCompleted: map['isCompleted'],
+      isArchived: map['isArchived']
+    );
   }
 
   String toJson() {
     var map = Map<String, dynamic>();
     map['name'] = name;
-    map['isArchived'] = isArchived;
     map['isCompleted'] = isCompleted;
+    map['isArchived'] = isArchived;
     return json.encode(map);
   }
 }
