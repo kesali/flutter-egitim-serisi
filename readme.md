@@ -30,3 +30,6 @@ Aşağıdaki video serisi alışveriş listesi uygulamasını yapıyoruz.
 - [2. Dialog BottomNavigationBar kullanımı ve Navigator ile veri iletişimi.](https://www.youtube.com/watch?v=A_7H8suyj1s)
 - [3. Http kütüphanesi üzerinden servis ile veri haberleşmesi.](https://www.youtube.com/watch?v=dzwR2mWwh8c)
 - [4. Http kütüphanesini kullanarak servise veri kaydetme Http post işlemi.](https://www.youtube.com/watch?v=TiCQWj5R9Wg)
+- [5. Güncelleme işlemi ve Http Patch, CheckBoxTile, AlertDialog kullanımı.](https://youtu.be/Drsx3UyjjNg)
+- [6. Arşive atma özelliği. Expanded, Stack ve Postioned widget kullanımı.](https://youtu.be/DicF6nx7faY)
+- [7. Infinite List yapımı ve Stream / StreamBuilder kullanımı.](https://youtu.be/0dcaqHBtbYQ)
