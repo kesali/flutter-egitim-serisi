@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shopping_list/http/item_service.dart';
-import 'package:shopping_list/model/item.dart';
-import 'package:shopping_list/ui/dialog/item_dialog.dart';
 import 'package:shopping_list/ui/shopping_list_history_page.dart';
 import 'package:shopping_list/ui/shopping_list_item_page.dart';
 
@@ -14,11 +11,9 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   int _selectedIndex = 0;
   final _scaffoldState = GlobalKey<ScaffoldState>();
   final PageController _pageController = PageController();
-  ItemService _itemService;
 
   @override
   void initState() {
-    _itemService = ItemService();
     _pageController.addListener(() {
       int currentIndex = _pageController.page.round();
       if (currentIndex != _selectedIndex) {
