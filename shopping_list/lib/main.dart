@@ -7,7 +7,8 @@ class ShoppingListApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(primarySwatch: Colors.green, backgroundColor: Colors.white),
+      theme:
+          ThemeData(primarySwatch: Colors.green, backgroundColor: Colors.white),
       home: ShoppingListPage(),
     );
   }

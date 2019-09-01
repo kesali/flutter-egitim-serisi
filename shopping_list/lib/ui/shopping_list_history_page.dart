@@ -55,7 +55,8 @@ class _ShoppingListHistoryPageState extends State<ShoppingListHistoryPage> {
         Expanded(
           child: StreamBuilder<List<Item>>(
               stream: _streamController.stream,
-              builder: (context, snapshot) {
+              builder:
+                  (BuildContext context, AsyncSnapshot<List<Item>> snapshot) {
                 switch (snapshot.connectionState) {
                   case ConnectionState.waiting:
                   case ConnectionState.none:
@@ -79,6 +80,9 @@ class _ShoppingListHistoryPageState extends State<ShoppingListHistoryPage> {
                         return ListTile(title: Text(item.name));
                       },
                     );
+                    break;
+                  default:
+                    return Container();
                     break;
                 }
               }),

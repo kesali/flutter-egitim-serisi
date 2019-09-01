@@ -39,8 +39,9 @@ class _ShoppingListItemPageState extends State<ShoppingListItemPage> {
             children: <Widget>[
               FutureBuilder(
                 future: _itemService.fetchItems(),
-                builder: (BuildContext context, AsyncSnapshot<List<Item>> snapshot) {
-                  if(snapshot.hasData && snapshot.data.length == 0){
+                builder:
+                    (BuildContext context, AsyncSnapshot<List<Item>> snapshot) {
+                  if (snapshot.hasData && snapshot.data.length == 0) {
                     return Center(child: Text("Your shopping list is empty!"));
                   }
 
@@ -93,7 +94,7 @@ class _ShoppingListItemPageState extends State<ShoppingListItemPage> {
                         context: context,
                         builder: (BuildContext context) => ItemDialog());
 
-                    if (itemName.isNotEmpty) {
+                    if (itemName != null && itemName.isNotEmpty) {
                       var item = Item(
                           name: itemName,
                           isCompleted: false,
