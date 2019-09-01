@@ -25,7 +25,7 @@ class _ShoppingListHistoryPageState extends State<ShoppingListHistoryPage> {
     _fetchArchive(_currentPage);
 
     _controller.addListener(_onScrolled);
-    
+
     super.initState();
   }
 
@@ -40,7 +40,7 @@ class _ShoppingListHistoryPageState extends State<ShoppingListHistoryPage> {
 
     var items = await _itemService.fetchArchive(20, take * page);
 
-    if(items.length == 0) return;
+    if (items.length == 0) return;
 
     _items.addAll(items);
 
@@ -56,37 +56,45 @@ class _ShoppingListHistoryPageState extends State<ShoppingListHistoryPage> {
         ),
         Expanded(
           child: StreamBuilder<List<Item>>(
-            stream: _streamController.stream,
-            builder: (context, snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.waiting:
-                case ConnectionState.none:
-                  return Center(child: CircularProgressIndicator());
-                  break;
-                case ConnectionState.active:
-                case ConnectionState.done:
-                return ListView.builder(
-                  controller: _controller,
-                  padding: EdgeInsets.all(0),
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    var item = snapshot.data[index];
+              stream: _streamController.stream,
+              builder: (context, snapshot) {
+                switch (snapshot.connectionState) {
+                  case ConnectionState.waiting:
+                  case ConnectionState.none:
+                    return Center(child: CircularProgressIndicator());
+                    break;
+                  case ConnectionState.active:
+                  case ConnectionState.done:
+                    if (snapshot.data.length == 0) {
+                      return Container(
+                        alignment: Alignment.topLeft,
+                        child: Text('Archive is empty!'),
+                        padding: EdgeInsets.all(16),
+                      );
+                    }
+                    return ListView.builder(
+                      controller: _controller,
+                      padding: EdgeInsets.all(0),
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        var item = snapshot.data[index];
 
-                    return ListTile(title: Text(item.name));
-                  },
-                );
-                break;
-              }
-
-            }
-          ),
+                        return ListTile(title: Text(item.name));
+                      },
+                    );
+                    break;
+                  default:
+                    return Container();
+                    break;
+                }
+              }),
         )
       ],
     );
   }
 
   void _onScrolled() {
-    if(_controller.position.maxScrollExtent == _controller.position.pixels){
+    if (_controller.position.maxScrollExtent == _controller.position.pixels) {
       _currentPage += 1;
 
       _fetchArchive(_currentPage);

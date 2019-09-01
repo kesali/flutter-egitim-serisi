@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_list/ui/shopping_list_history_page.dart';
 import 'package:shopping_list/ui/shopping_list_item_page.dart';
+import 'package:shopping_list/ui/shopping_list_main.dart';
 
 class ShoppingListPage extends StatefulWidget {
   @override
@@ -43,9 +44,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
       body: PageView(
         controller: _pageController,
         children: <Widget>[
-          Container(
-            color: Colors.red,
-          ),
+          ShoppingListMainPage(),
           ShoppingListItemPage(),
           ShoppingListHistoryPage(),
         ],
