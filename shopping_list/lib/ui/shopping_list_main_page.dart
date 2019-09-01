@@ -34,22 +34,22 @@ class _ShoppingListMainPageState extends State<ShoppingListMainPage> {
                 child: GridView.count(
                   crossAxisCount: 2,
                   children: [
-                    new GridItem(
+                    GridItem(
                       icon: Icons.shopping_basket,
                       title: 'Total Items',
                       total: snapshot.data.total,
                     ),
-                    new GridItem(
+                    GridItem(
                       icon: Icons.add_shopping_cart,
                       title: 'Current Items',
                       total: snapshot.data.current,
                     ),
-                    new GridItem(
+                    GridItem(
                       icon: Icons.history,
                       title: 'Completed Items',
                       total: snapshot.data.completed,
                     ),
-                    new GridItem(
+                    GridItem(
                       icon: Icons.remove_shopping_cart,
                       title: 'Deleted Items',
                       total: snapshot.data.deleted,

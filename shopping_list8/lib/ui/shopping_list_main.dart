@@ -34,30 +34,35 @@ class _ShoppingListMainPageState extends State<ShoppingListMainPage> {
               );
             }
             return Expanded(
-              child: GridView.count(
-                crossAxisCount: 2,
-                children: <Widget>[
-                  GridItem(
-                    icon: Icons.shopping_basket,
-                    title: 'Total Items',
-                    total: snapshot.data.total,
-                  ),
-                  GridItem(
-                    icon: Icons.add_shopping_cart,
-                    title: 'Current Items',
-                    total: snapshot.data.current,
-                  ),
-                  GridItem(
-                    icon: Icons.history,
-                    title: 'Completed Items',
-                    total: snapshot.data.completed,
-                  ),
-                  GridItem(
-                    icon: Icons.remove_shopping_cart,
-                    title: 'Deleted Items',
-                    total: snapshot.data.deleted,
-                  ),
-                ],
+              child: RefreshIndicator(
+                child: GridView.count(
+                  crossAxisCount: 2,
+                  children: <Widget>[
+                    GridItem(
+                      icon: Icons.shopping_basket,
+                      title: 'Total Items',
+                      total: snapshot.data.total,
+                    ),
+                    GridItem(
+                      icon: Icons.add_shopping_cart,
+                      title: 'Current Items',
+                      total: snapshot.data.current,
+                    ),
+                    GridItem(
+                      icon: Icons.history,
+                      title: 'Completed Items',
+                      total: snapshot.data.completed,
+                    ),
+                    GridItem(
+                      icon: Icons.remove_shopping_cart,
+                      title: 'Deleted Items',
+                      total: snapshot.data.deleted,
+                    ),
+                  ],
+                ),
+                onRefresh: () async {
+                  setState(() {});
+                },
               ),
             );
           },
