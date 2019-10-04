@@ -33,3 +33,5 @@ Aşağıdaki video serisi alışveriş listesi uygulamasını yapıyoruz.
 - [5. Güncelleme işlemi ve Http Patch, CheckBoxTile, AlertDialog kullanımı.](https://youtu.be/Drsx3UyjjNg)
 - [6. Arşive atma özelliği. Expanded, Stack ve Postioned widget kullanımı.](https://youtu.be/DicF6nx7faY)
 - [7. Infinite List yapımı ve Stream / StreamBuilder kullanımı.](https://youtu.be/0dcaqHBtbYQ)
+- [8. GridView ve RefreshIndicator kullanımı.](https://www.youtube.com/watch?v=BR354yiK-iU)
+- [9. Google Play Store üzerinde yayınlama - appbundle ve apk oluşturma.](https://www.youtube.com/watch?v=gX3aP6jX9h0)
