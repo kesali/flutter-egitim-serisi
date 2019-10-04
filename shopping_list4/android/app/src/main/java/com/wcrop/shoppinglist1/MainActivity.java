@@ -1,4 +1,4 @@
-package com.wcrop.shoppinglist1;
+package com.wcrop.shoppinglist;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;

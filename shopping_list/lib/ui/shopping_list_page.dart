@@ -1,3 +1,4 @@
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:shopping_list/ui/shopping_list_history_page.dart';
 import 'package:shopping_list/ui/shopping_list_item_page.dart';
@@ -28,6 +29,39 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
 
   @override
   Widget build(BuildContext context) {
+    MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo();
+
+    BannerAd myBanner = BannerAd(
+      adUnitId: 'ca-app-pub-2117694879613558/5884902838',
+      size: AdSize.smartBanner,
+      targetingInfo: targetingInfo,
+      listener: (MobileAdEvent event) {
+        print("BannerAd event is $event");
+      },
+    );
+
+    InterstitialAd myInterstitial = InterstitialAd(
+      adUnitId: InterstitialAd.testAdUnitId,
+      targetingInfo: targetingInfo,
+      listener: (MobileAdEvent event) {
+        print("InterstitialAd event is $event");
+      },
+    );
+
+    myBanner
+      ..load()
+      ..show(
+        anchorOffset: 50,
+      );
+
+    myBanner.dispose();
+
+    myInterstitial
+      ..load()
+      ..show();
+
+    myInterstitial.dispose();
+
     return Scaffold(
       key: _scaffoldState,
       bottomNavigationBar: BottomNavigationBar(

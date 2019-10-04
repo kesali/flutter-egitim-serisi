@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.wcrop.shoppinglist1">
+    package="com.wcrop.shoppinglist">
 
     <!-- The INTERNET permission is required for development. Specifically,
          flutter needs it to communicate with the running application
@@ -16,6 +16,9 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="shopping_list"
         android:icon="@mipmap/ic_launcher">
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-2117694879613558~6589827451"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
