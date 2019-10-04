@@ -1,5 +1,5 @@
-import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
+import 'package:shopping_list/services/advert-service.dart';
 import 'package:shopping_list/ui/shopping_list_history_page.dart';
 import 'package:shopping_list/ui/shopping_list_item_page.dart';
 import 'package:shopping_list/ui/shopping_list_main_page.dart';
@@ -13,6 +13,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   int _selectedIndex = 0;
   final _scaffoldState = GlobalKey<ScaffoldState>();
   final PageController _pageController = PageController();
+  final AdvertService _advertService = AdvertService();
 
   @override
   void initState() {
@@ -24,44 +25,14 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
         setState(() {});
       }
     });
+
+    _advertService.showBanner();
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo();
-
-    BannerAd myBanner = BannerAd(
-      adUnitId: 'ca-app-pub-2117694879613558/5884902838',
-      size: AdSize.smartBanner,
-      targetingInfo: targetingInfo,
-      listener: (MobileAdEvent event) {
-        print("BannerAd event is $event");
-      },
-    );
-
-    InterstitialAd myInterstitial = InterstitialAd(
-      adUnitId: InterstitialAd.testAdUnitId,
-      targetingInfo: targetingInfo,
-      listener: (MobileAdEvent event) {
-        print("InterstitialAd event is $event");
-      },
-    );
-
-    myBanner
-      ..load()
-      ..show(
-        anchorOffset: 50,
-      );
-
-    myBanner.dispose();
-
-    myInterstitial
-      ..load()
-      ..show();
-
-    myInterstitial.dispose();
-
     return Scaffold(
       key: _scaffoldState,
       bottomNavigationBar: BottomNavigationBar(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_list/http/item_service.dart';
 import 'package:shopping_list/model/item.dart';
+import 'package:shopping_list/services/advert-service.dart';
 import 'package:shopping_list/ui/dialog/confirm_dialog.dart';
 import 'package:shopping_list/ui/dialog/item_dialog.dart';
 
@@ -11,10 +12,12 @@ class ShoppingListItemPage extends StatefulWidget {
 
 class _ShoppingListItemPageState extends State<ShoppingListItemPage> {
   ItemService _itemService;
+  final AdvertService _advertService = AdvertService();
 
   @override
   void initState() {
     _itemService = ItemService();
+    _advertService.showInterstitial();
     super.initState();
   }
 
