@@ -15,32 +15,21 @@ class AdvertService {
   }
 
   showBanner() {
-    BannerAd bannerAd = BannerAd(
-      adUnitId: _bannerAd,
-      size: AdSize.smartBanner,
-      targetingInfo: _targetingInfo,
-      listener: (MobileAdEvent event) {
-        print("BannerAd event is $event");
-      },
-    );
+    BannerAd banner = BannerAd(
+        adUnitId: _bannerAd,
+        size: AdSize.smartBanner,
+        targetingInfo: _targetingInfo);
 
-    bannerAd
+    banner
       ..load()
-      ..show(
-        anchorOffset: 50,
-      );
+      ..show(anchorOffset: 50);
 
-    bannerAd.dispose();
+    banner.dispose();
   }
 
-  showInterstitial() {
+  showIntersitial() {
     InterstitialAd interstitialAd = InterstitialAd(
-      adUnitId: InterstitialAd.testAdUnitId,
-      targetingInfo: _targetingInfo,
-      listener: (MobileAdEvent event) {
-        print("InterstitialAd event is $event");
-      },
-    );
+        adUnitId: InterstitialAd.testAdUnitId, targetingInfo: _targetingInfo);
 
     interstitialAd
       ..load()

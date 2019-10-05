@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_list/services/advert-service.dart';
 import 'package:shopping_list/ui/shopping_list_history_page.dart';
 import 'package:shopping_list/ui/shopping_list_item_page.dart';
 import 'package:shopping_list/ui/shopping_list_main.dart';
@@ -12,6 +13,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
   int _selectedIndex = 0;
   final _scaffoldState = GlobalKey<ScaffoldState>();
   final PageController _pageController = PageController();
+  final AdvertService _advertService = AdvertService();
 
   @override
   void initState() {
@@ -23,6 +25,7 @@ class _ShoppingListPageState extends State<ShoppingListPage> {
         setState(() {});
       }
     });
+    _advertService.showBanner();
     super.initState();
   }
 
