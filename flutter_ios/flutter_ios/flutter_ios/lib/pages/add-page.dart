@@ -24,50 +24,54 @@ class _AddPageState extends State<AddPage> {
         children: [
           Expanded(
             child: ListView.builder(
-              itemBuilder: (context, index) => Container(
-                child: GestureDetector(
-                  onTap: () {
-                    Todo.toggle(index);
-                    setState(() {});
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 8),
-                    decoration: BoxDecoration(
-                        border: Border(
-                      bottom: BorderSide(
-                          width: 1.0, color: CupertinoColors.inactiveGray),
-                    )),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Text(
-                            todos[index].name,
-                            style: TextStyle(
-                                decoration: todos[index].complete
-                                    ? TextDecoration.lineThrough
-                                    : TextDecoration.none),
-                          ),
-                          CupertinoSwitch(
-                            onChanged: (bool value) {
-                              Todo.toggle(index);
-                              setState(() {});
-                            },
-                            value: todos[index].complete,
-                          )
-                        ],
+              itemBuilder: (context, index) {
+                Todo todo = todos[index];
+                return Container(
+                  child: GestureDetector(
+                    onTap: () {
+                      todo.toggle();
+                      setState(() {});
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                      decoration: BoxDecoration(
+                          border: Border(
+                        bottom: BorderSide(
+                            width: 1.0, color: CupertinoColors.inactiveGray),
+                      )),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              todo.name,
+                              style: TextStyle(
+                                  decoration: todo.complete
+                                      ? TextDecoration.lineThrough
+                                      : TextDecoration.none),
+                            ),
+                            CupertinoSwitch(
+                              onChanged: (bool value) {
+                                todo.toggle();
+                                setState(() {});
+                              },
+                              value: todo.complete,
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ),
+                );
+              },
               itemCount: todos.length,
             ),
           ),
           CupertinoTextField(
             controller: _textController,
             prefix: Icon(CupertinoIcons.book),
+            placeholder: 'I want to...',
             suffix: CupertinoButton(
               child: Icon(CupertinoIcons.add_circled_solid),
               onPressed: () {

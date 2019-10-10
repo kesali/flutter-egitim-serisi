@@ -13,7 +13,7 @@ class Todo {
     todos.add(Todo(name, false));
   }
 
-  static toggle(int index) {
-    todos[index].complete = !todos[index].complete;
+  toggle() {
+    complete = !complete;
   }
 }

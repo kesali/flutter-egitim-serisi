@@ -28,12 +28,9 @@ class IosExample extends StatelessWidget {
           return CupertinoPageScaffold(
             navigationBar: CupertinoNavigationBar(
               middle: Text("IOS Example App $index"),
-              trailing: GestureDetector(
-                onTap: () {},
-                child: Icon(
-                  CupertinoIcons.heart_solid,
-                  color: CupertinoColors.destructiveRed,
-                ),
+              trailing: Icon(
+                CupertinoIcons.heart_solid,
+                color: CupertinoColors.destructiveRed,
               ),
             ),
             child: CupertinoTabView(builder: (context) {
