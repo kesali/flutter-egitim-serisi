@@ -11,7 +11,11 @@ class AdvertService {
       : 'ca-app-pub-1985780481766193/9671340266';
 
   AdvertService._internal() {
-    _targetingInfo = MobileAdTargetingInfo();
+    _targetingInfo = MobileAdTargetingInfo(
+      keywords: <String>['malaysia', 'uber', 'sports'],
+      contentUrl: 'https://www.wcrop.com',
+      nonPersonalizedAds: true,
+    );
   }
 
   showBanner() {

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shopping_list/http/item_service.dart';
 import 'package:shopping_list/model/item.dart';
+import 'package:shopping_list/services/advert-service.dart';
 
 class ShoppingListHistoryPage extends StatefulWidget {
   @override
@@ -15,8 +16,8 @@ class _ShoppingListHistoryPageState extends State<ShoppingListHistoryPage> {
   ItemService _itemService;
   final ScrollController _controller = ScrollController();
   int _currentPage = 0;
-
   List<Item> _items = List<Item>();
+  final AdvertService _advertService = AdvertService();
 
   @override
   void initState() {
@@ -25,6 +26,8 @@ class _ShoppingListHistoryPageState extends State<ShoppingListHistoryPage> {
     _fetchArchive(_currentPage);
 
     _controller.addListener(_onScrolled);
+
+    _advertService.showInterstitial();
 
     super.initState();
   }

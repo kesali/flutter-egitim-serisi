@@ -1,0 +1,41 @@
+{
+  "project_info": {
+    "project_number": "401371948987",
+    "firebase_url": "https://shopping-list-fa9c1.firebaseio.com",
+    "project_id": "shopping-list-fa9c1",
+    "storage_bucket": "shopping-list-fa9c1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:401371948987:android:f27e0ea20605afb895c69e",
+        "android_client_info": {
+          "package_name": "com.wcrop.shoppinglist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "401371948987-aq6sr3h1pf3q32plpkpt2e3ugnj4btgn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvMoN0S36HsVCLBGgX3dYGaEzaQMyep1c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "401371948987-aq6sr3h1pf3q32plpkpt2e3ugnj4btgn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-1985780481766193~1194633180"
+    }
+  ],
+  "configuration_version": "1"
+}
