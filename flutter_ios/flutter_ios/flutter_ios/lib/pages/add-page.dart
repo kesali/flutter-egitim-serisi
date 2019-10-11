@@ -75,6 +75,7 @@ class _AddPageState extends State<AddPage> {
             suffix: CupertinoButton(
               child: Icon(CupertinoIcons.add_circled_solid),
               onPressed: () {
+                if (_textController.text.isEmpty) return;
                 Todo.add(_textController.text);
                 _textController.clear();
                 setState(() {});
