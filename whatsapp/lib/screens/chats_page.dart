@@ -6,10 +6,25 @@ class ChatsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Firestore.instance
-        .collection('chats')
-        .snapshots()
-        .listen((data) => data.documents.forEach((doc) => print(doc["name"])));
-    return Container();
+    return StreamBuilder(
+      stream: Firestore.instance.collection('chats').snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return Text('Loading...');
+          default:
+            return ListView(
+              children:
+                  snapshot.data.documents.map((DocumentSnapshot document) {
+                return ListTile(
+                  title: Text(document['name']),
+                  subtitle: Text(document['message']),
+                );
+              }).toList(),
+            );
+        }
+      },
+    );
   }
 }
