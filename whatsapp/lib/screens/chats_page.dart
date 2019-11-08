@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import 'conversation_page.dart';
+
 class ChatsPage extends StatelessWidget {
   const ChatsPage({Key key}) : super(key: key);
 
@@ -9,21 +11,58 @@ class ChatsPage extends StatelessWidget {
     return StreamBuilder(
       stream: Firestore.instance.collection('chats').snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-        switch (snapshot.connectionState) {
-          case ConnectionState.waiting:
-            return Text('Loading...');
-          default:
-            return ListView(
-              children:
-                  snapshot.data.documents.map((DocumentSnapshot document) {
-                return ListTile(
-                  title: Text(document['name']),
-                  subtitle: Text(document['message']),
-                );
-              }).toList(),
-            );
+        if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
         }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Text('Loading...');
+        }
+
+        return ListView(
+          children: snapshot.data.documents
+              .map(
+                (document) => ListTile(
+                  leading: CircleAvatar(
+                      backgroundImage:
+                          NetworkImage("https://placekitten.com/200/200")),
+                  title: Text(document['name']),
+                  subtitle: Container(child: Text(document['message'])),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ConversationPage(),
+                      ),
+                    );
+                  },
+                  trailing: Column(
+                    children: <Widget>[
+                      Text("19:30"),
+                      Container(
+                        width: 20,
+                        height: 20,
+                        margin: EdgeInsets.only(top: 8),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Theme.of(context).accentColor),
+                        child: Center(
+                          child: Text(
+                            "16",
+                            textScaleFactor: 0.8,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+              .toList(),
+        );
       },
     );
   }

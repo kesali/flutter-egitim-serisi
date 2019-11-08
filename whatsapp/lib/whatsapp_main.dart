@@ -31,6 +31,16 @@ class _WhatsAppMainState extends State<WhatsAppMain>
     return Scaffold(
       appBar: AppBar(
         title: Text("Whatsapp Clone"),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: Icon(Icons.more_vert),
+            onPressed: () {},
+          )
+        ],
         bottom: TabBar(
           controller: _tabController,
           tabs: <Widget>[
@@ -56,7 +66,10 @@ class _WhatsAppMainState extends State<WhatsAppMain>
       ),
       floatingActionButton: _showMessage
           ? FloatingActionButton(
-              child: Icon(Icons.message),
+              child: Icon(
+                Icons.message,
+                color: Colors.white,
+              ),
               onPressed: () {},
             )
           : null,
