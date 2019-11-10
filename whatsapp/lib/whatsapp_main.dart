@@ -29,40 +29,62 @@ class _WhatsAppMainState extends State<WhatsAppMain>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Whatsapp Clone"),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {},
+      body: Container(
+        color: Theme.of(context).primaryColor,
+        child: SafeArea(
+          child: NestedScrollView(
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
+              return [
+                SliverAppBar(
+                  floating: true,
+                  title: Text("Whatsapp Clone"),
+                  actions: <Widget>[
+                    IconButton(
+                      icon: Icon(Icons.search),
+                      onPressed: () {},
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.more_vert),
+                      onPressed: () {},
+                    )
+                  ],
+                )
+              ];
+            },
+            body: Column(
+              children: <Widget>[
+                TabBar(
+                  controller: _tabController,
+                  tabs: <Widget>[
+                    Tab(
+                      icon: Icon(Icons.camera),
+                    ),
+                    Tab(
+                      text: "Chats",
+                    ),
+                    Tab(text: "Status"),
+                    Tab(text: "Calls"),
+                  ],
+                ),
+                Expanded(
+                  child: Container(
+                    color: Colors.white,
+                    child: TabBarView(
+                      controller: _tabController,
+                      children: <Widget>[
+                        CameraPage(),
+                        ChatsPage(),
+                        StatusPage(),
+                        CallsPage(),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-          IconButton(
-            icon: Icon(Icons.more_vert),
-            onPressed: () {},
-          )
-        ],
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: <Widget>[
-            Tab(
-              icon: Icon(Icons.camera),
-            ),
-            Tab(
-              text: "Chats",
-            ),
-            Tab(text: "Status"),
-            Tab(text: "Calls"),
-          ],
         ),
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: <Widget>[
-          CameraPage(),
-          ChatsPage(),
-          StatusPage(),
-          CallsPage(),
-        ],
       ),
       floatingActionButton: _showMessage
           ? FloatingActionButton(
