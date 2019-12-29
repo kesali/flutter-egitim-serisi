@@ -1,42 +1,35 @@
 {
   "project_info": {
-    "project_number": "103839133890",
-    "firebase_url": "https://chat-b4c97.firebaseio.com",
-    "project_id": "chat-b4c97",
-    "storage_bucket": "chat-b4c97.appspot.com"
+    "project_number": "189020888335",
+    "firebase_url": "https://chat-test-cf2d9.firebaseio.com",
+    "project_id": "chat-test-cf2d9",
+    "storage_bucket": "chat-test-cf2d9.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:103839133890:android:20575e0ccd3497a8decb5b",
+        "mobilesdk_app_id": "1:189020888335:android:650b92bec4068863da727a",
         "android_client_info": {
           "package_name": "com.wcrop.chat"
         }
       },
       "oauth_client": [
         {
-          "client_id": "103839133890-3svm989u1qsvgnns4iaupvb9uh4c97bm.apps.googleusercontent.com",
+          "client_id": "189020888335-klfsc3vb3q46br6qnb8tm9ip2d1i4q1l.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAFqOugaUG-THxFmapB9HCafCUttU9INvU"
+          "current_key": "AIzaSyCc3wUDNJuPZZPzsTG1KMIM8JvyYxJY9Ok"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "103839133890-3svm989u1qsvgnns4iaupvb9uh4c97bm.apps.googleusercontent.com",
+              "client_id": "189020888335-klfsc3vb3q46br6qnb8tm9ip2d1i4q1l.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "103839133890-govgo1sjrmig2cej9oobco2chnpd4dqi.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.wcrop.chat"
-              }
             }
           ]
         }

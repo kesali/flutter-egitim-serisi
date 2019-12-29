@@ -9,7 +9,10 @@ class ChatsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: Firestore.instance.collection('chats').snapshots(),
+      stream: Firestore.instance
+          .collection('conversations')
+          .where('members', arrayContains: 'zou1nLbxWYUwLRZslH99BE3L3773')
+          .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
@@ -26,8 +29,8 @@ class ChatsPage extends StatelessWidget {
                   leading: CircleAvatar(
                       backgroundImage:
                           NetworkImage("https://placekitten.com/200/200")),
-                  title: Text(document['name']),
-                  subtitle: Container(child: Text(document['message'])),
+                  title: Text("Test"),
+                  subtitle: Container(child: Text(document['displayMessage'])),
                   onTap: () {
                     Navigator.push(
                       context,

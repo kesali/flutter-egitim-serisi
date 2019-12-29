@@ -1,7 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:keyboard_visibility/keyboard_visibility.dart';
 
-class ConversationPage extends StatelessWidget {
+class ConversationPage extends StatefulWidget {
   const ConversationPage({Key key, String conversationId}) : super(key: key);
+
+  @override
+  _ConversationPageState createState() => _ConversationPageState();
+}
+
+class _ConversationPageState extends State<ConversationPage> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    KeyboardVisibilityNotification().addNewListener(
+      onChange: (bool visible) {
+        if (visible) {
+          _scrollController.animateTo(
+            MediaQuery.of(context).size.height / 2,
+            curve: Curves.ease,
+            duration: Duration(milliseconds: 200),
+          );
+        }
+      },
+    );
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +71,7 @@ class ConversationPage extends StatelessWidget {
           children: <Widget>[
             Expanded(
               child: ListView.builder(
+                controller: _scrollController,
                 itemBuilder: (BuildContext context, int index) {
                   return ListTile(
                     title: Align(
