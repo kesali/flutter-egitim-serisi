@@ -1,8 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 
 class ConversationPage extends StatefulWidget {
-  const ConversationPage({Key key, String conversationId}) : super(key: key);
+  final String conversationId;
+  final String userId;
+
+  const ConversationPage({Key key, this.conversationId, this.userId}) : super(key: key);
 
   @override
   _ConversationPageState createState() => _ConversationPageState();
@@ -70,28 +74,36 @@ class _ConversationPageState extends State<ConversationPage> {
         child: Column(
           children: <Widget>[
             Expanded(
-              child: ListView.builder(
-                controller: _scrollController,
-                itemBuilder: (BuildContext context, int index) {
-                  return ListTile(
-                    title: Align(
-                        alignment: index % 2 == 0
-                            ? Alignment.centerRight
-                            : Alignment.bottomLeft,
-                        child: Container(
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                                color: Theme.of(context).primaryColor,
-                                borderRadius: BorderRadius.horizontal(
-                                    left: Radius.circular(10),
-                                    right: Radius.circular(10))),
-                            child: Text(
-                              "asda",
-                              style: TextStyle(color: Colors.white),
-                            ))),
-                  );
-                },
-                itemCount: 10,
+              child: StreamBuilder(
+                stream: Firestore.instance
+                    .collection('conversations/${widget.conversationId}/messages')
+                    .snapshots(),
+                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) => !snapshot.hasData
+                    ? CircularProgressIndicator()
+                    : ListView(
+                        controller: _scrollController,
+                        children: snapshot.data.documents
+                            .map(
+                              (document) => ListTile(
+                                title: Align(
+                                    alignment: widget.userId == document['senderId']
+                                        ? Alignment.centerRight
+                                        : Alignment.bottomLeft,
+                                    child: Container(
+                                        padding: EdgeInsets.all(8),
+                                        decoration: BoxDecoration(
+                                            color: Theme.of(context).primaryColor,
+                                            borderRadius: BorderRadius.horizontal(
+                                                left: Radius.circular(10),
+                                                right: Radius.circular(10))),
+                                        child: Text(
+                                          document['message'],
+                                          style: TextStyle(color: Colors.white),
+                                        ))),
+                              ),
+                            )
+                            .toList(),
+                      ),
               ),
             ),
             Row(
@@ -103,8 +115,7 @@ class _ConversationPageState extends State<ConversationPage> {
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.horizontal(
-                            left: Radius.circular(25),
-                            right: Radius.circular(25))),
+                            left: Radius.circular(25), right: Radius.circular(25))),
                     child: Row(
                       children: <Widget>[
                         InkWell(
@@ -116,9 +127,8 @@ class _ConversationPageState extends State<ConversationPage> {
                         ),
                         Expanded(
                             child: TextField(
-                          decoration: InputDecoration(
-                              hintText: "Type a message",
-                              border: InputBorder.none),
+                          decoration:
+                              InputDecoration(hintText: "Type a message", border: InputBorder.none),
                         )),
                         InkWell(
                           onTap: () {},

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'conversation_page.dart';
 
 class ChatsPage extends StatelessWidget {
+  final String userId = 'zou1nLbxWYUwLRZslH99BE3L3773';
+
   const ChatsPage({Key key}) : super(key: key);
 
   @override
@@ -11,7 +13,7 @@ class ChatsPage extends StatelessWidget {
     return StreamBuilder(
       stream: Firestore.instance
           .collection('conversations')
-          .where('members', arrayContains: 'zou1nLbxWYUwLRZslH99BE3L3773')
+          .where('members', arrayContains: userId)
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
@@ -27,15 +29,17 @@ class ChatsPage extends StatelessWidget {
               .map(
                 (document) => ListTile(
                   leading: CircleAvatar(
-                      backgroundImage:
-                          NetworkImage("https://placekitten.com/200/200")),
+                      backgroundImage: NetworkImage("https://placekitten.com/200/200")),
                   title: Text("Test"),
                   subtitle: Container(child: Text(document['displayMessage'])),
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ConversationPage(),
+                        builder: (context) => ConversationPage(
+                          conversationId: document.documentID,
+                          userId: userId,
+                        ),
                       ),
                     );
                   },
@@ -47,8 +51,7 @@ class ChatsPage extends StatelessWidget {
                         height: 20,
                         margin: EdgeInsets.only(top: 8),
                         decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Theme.of(context).accentColor),
+                            shape: BoxShape.circle, color: Theme.of(context).accentColor),
                         child: Center(
                           child: Text(
                             "16",
