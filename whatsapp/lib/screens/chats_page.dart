@@ -1,44 +1,43 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
-import 'conversation_page.dart';
+import 'package:provider/provider.dart';
+import 'package:whatsapp_clone/core/services/chat_service.dart';
+import 'package:whatsapp_clone/lacator.dart';
+import 'package:whatsapp_clone/models/conversation.dart';
+import 'package:whatsapp_clone/screens/conversation_page.dart';
 
 class ChatsPage extends StatelessWidget {
-  final String userId = 'zou1nLbxWYUwLRZslH99BE3L3773';
+  final String _userId = 'zou1nLbxWYUwLRZslH99BE3L3773';
 
   const ChatsPage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: Firestore.instance
-          .collection('conversations')
-          .where('members', arrayContains: userId)
-          .snapshots(),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
+    return StreamBuilder<List<Conversation>>(
+      stream: getIt<ChatService>().getConversations(_userId),
+      builder: (BuildContext context, stream) {
+        if (stream.hasError) {
+          return Text('Error: ${stream.error}');
         }
 
-        if (snapshot.connectionState == ConnectionState.waiting) {
+        if (stream.connectionState == ConnectionState.waiting) {
           return Text('Loading...');
         }
 
         return ListView(
-          children: snapshot.data.documents
+          children: stream.data
               .map(
-                (document) => ListTile(
+                (conversation) => ListTile(
                   leading: CircleAvatar(
-                      backgroundImage: NetworkImage("https://placekitten.com/200/200")),
-                  title: Text("Test"),
-                  subtitle: Container(child: Text(document['displayMessage'])),
+                      backgroundImage: NetworkImage('https://placekitten.com/200/200')),
+                  title: Text('Dali'),
+                  subtitle: Container(child: Text(conversation.displayMessage)),
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => ConversationPage(
-                          conversationId: document.documentID,
-                          userId: userId,
+                          conversationId: conversation.id,
+                          userId: _userId,
                         ),
                       ),
                     );

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:whatsapp_clone/lacator.dart';
 import 'package:whatsapp_clone/whatsapp_main.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  setupLocators();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
