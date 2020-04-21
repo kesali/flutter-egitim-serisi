@@ -14,6 +14,8 @@ class ConversationPage extends StatefulWidget {
 
 class _ConversationPageState extends State<ConversationPage> {
   final ScrollController _scrollController = ScrollController();
+  final TextEditingController _controller = TextEditingController();
+  CollectionReference _ref;
 
   @override
   void initState() {
@@ -28,6 +30,8 @@ class _ConversationPageState extends State<ConversationPage> {
         }
       },
     );
+
+    _ref = Firestore.instance.collection('conversations/${widget.conversationId}/messages');
 
     super.initState();
   }
@@ -75,9 +79,7 @@ class _ConversationPageState extends State<ConversationPage> {
           children: <Widget>[
             Expanded(
               child: StreamBuilder(
-                stream: Firestore.instance
-                    .collection('conversations/${widget.conversationId}/messages')
-                    .snapshots(),
+                stream: _ref.orderBy('timeStamp').snapshots(),
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) => !snapshot.hasData
                     ? CircularProgressIndicator()
                     : ListView(
@@ -113,9 +115,12 @@ class _ConversationPageState extends State<ConversationPage> {
                     margin: EdgeInsets.all(5),
                     height: 40,
                     decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.horizontal(
-                            left: Radius.circular(25), right: Radius.circular(25))),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.horizontal(
+                        left: Radius.circular(25),
+                        right: Radius.circular(25),
+                      ),
+                    ),
                     child: Row(
                       children: <Widget>[
                         InkWell(
@@ -127,6 +132,7 @@ class _ConversationPageState extends State<ConversationPage> {
                         ),
                         Expanded(
                             child: TextField(
+                          controller: _controller,
                           decoration:
                               InputDecoration(hintText: "Type a message", border: InputBorder.none),
                         )),
@@ -157,10 +163,18 @@ class _ConversationPageState extends State<ConversationPage> {
                   ),
                   child: InkWell(
                     child: Icon(
-                      Icons.mic,
+                      Icons.send,
                       color: Colors.white,
                     ),
-                    onTap: () {},
+                    onTap: () async {
+                      await _ref.add({
+                        'message': _controller.text,
+                        'senderId': widget.userId,
+                        'timeStamp': DateTime.now()
+                      });
+
+                      _controller.text = '';
+                    },
                   ),
                 )
               ],
