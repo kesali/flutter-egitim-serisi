@@ -57,25 +57,9 @@ class _WhatsAppMainState extends State<WhatsAppMain>
                                   icon: Icon(Icons.search),
                                   onPressed: () {},
                                 ),
-                                PopupMenuButton(
-                                  itemBuilder: (BuildContext context) => [
-                                    PopupMenuItem(
-                                      value: 'ad',
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: <Widget>[
-                                          Text('Exit'),
-                                          IconButton(
-                                            color: Colors.black,
-                                            icon: Icon(Icons.exit_to_app),
-                                            onPressed: () async =>
-                                                await model.signOut(),
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  ],
+                                IconButton(
+                                  icon: Icon(Icons.more_vert),
+                                  onPressed: () {},
                                 ),
                               ],
                             )

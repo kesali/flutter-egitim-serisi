@@ -15,8 +15,6 @@ class SignInPage extends StatelessWidget {
       create: (BuildContext context) => getIt<SignInModel>(),
       child: Consumer<SignInModel>(
         builder: (context, model, widget) {
-          model.isUserLoggedIn();
-
           return Scaffold(
             appBar: AppBar(
               title: Text("Sign In to Whatsapp Clone"),

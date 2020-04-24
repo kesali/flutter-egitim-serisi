@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class NavigatorService {
   GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
@@ -9,12 +10,13 @@ class NavigatorService {
     _navigatorKey.currentState.pop();
   }
 
-  Future<dynamic> pusnNamed(String route, {Object arguments}) {
-    return _navigatorKey.currentState.pushNamed(route, arguments: arguments);
+  Future<dynamic> navigateTo(Widget route) {
+    return _navigatorKey.currentState
+        .push(MaterialPageRoute(builder: (BuildContext context) => route));
   }
 
-  Future<dynamic> replaceNamed(String route, {Object arguments}) {
-    return _navigatorKey.currentState
-        .pushReplacementNamed(route, arguments: arguments);
+  Future<dynamic> navigateAndReplace(Widget route) {
+    return _navigatorKey.currentState.pushReplacement(
+        MaterialPageRoute(builder: (BuildContext context) => route));
   }
 }
