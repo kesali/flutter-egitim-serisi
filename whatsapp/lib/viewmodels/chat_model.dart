@@ -1,5 +1,5 @@
 import 'package:whatsapp_clone/core/services/chat_service.dart';
-import 'package:whatsapp_clone/lacator.dart';
+import 'package:whatsapp_clone/locator.dart';
 import 'package:whatsapp_clone/models/conversation.dart';
 import 'package:whatsapp_clone/viewmodels/base_model.dart';
 

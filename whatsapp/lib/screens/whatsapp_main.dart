@@ -1,7 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:whatsapp_clone/lacator.dart';
+import 'package:whatsapp_clone/locator.dart';
 import 'package:whatsapp_clone/screens/calls_page.dart';
 import 'package:whatsapp_clone/screens/camera_page.dart';
 import 'package:whatsapp_clone/screens/chats_page.dart';
@@ -105,7 +104,7 @@ class _WhatsAppMainState extends State<WhatsAppMain>
                       Icons.message,
                       color: Colors.white,
                     ),
-                    onPressed: () {},
+                    onPressed: () async => model.openContacts(),
                   )
                 : null,
           );

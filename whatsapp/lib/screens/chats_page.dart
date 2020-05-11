@@ -1,23 +1,23 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:whatsapp_clone/lacator.dart';
+import 'package:whatsapp_clone/locator.dart';
 import 'package:whatsapp_clone/models/conversation.dart';
 import 'package:whatsapp_clone/screens/conversation_page.dart';
 import 'package:whatsapp_clone/viewmodels/chat_model.dart';
 
 class ChatsPage extends StatelessWidget {
-  final String _userId = 'zou1nLbxWYUwLRZslH99BE3L3773';
-
   const ChatsPage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final model = getIt<ChatModel>();
+    final user = Provider.of<FirebaseUser>(context);
 
     return ChangeNotifierProvider(
       create: (context) => model,
       child: StreamBuilder<List<Conversation>>(
-        stream: model.conversations(_userId),
+        stream: model.conversations(user.uid),
         builder: (BuildContext context, stream) {
           if (stream.hasError) {
             return Text('Error: ${stream.error}');
@@ -32,16 +32,18 @@ class ChatsPage extends StatelessWidget {
                 .map(
                   (conversation) => ListTile(
                     leading: CircleAvatar(
-                        backgroundImage: NetworkImage('https://placekitten.com/200/200')),
+                        backgroundImage:
+                            NetworkImage('https://placekitten.com/200/200')),
                     title: Text('Dali'),
-                    subtitle: Container(child: Text(conversation.displayMessage)),
+                    subtitle:
+                        Container(child: Text(conversation.displayMessage)),
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => ConversationPage(
                             conversationId: conversation.id,
-                            userId: _userId,
+                            userId: user.uid,
                           ),
                         ),
                       );
@@ -54,7 +56,8 @@ class ChatsPage extends StatelessWidget {
                           height: 20,
                           margin: EdgeInsets.only(top: 8),
                           decoration: BoxDecoration(
-                              shape: BoxShape.circle, color: Theme.of(context).accentColor),
+                              shape: BoxShape.circle,
+                              color: Theme.of(context).accentColor),
                           child: Center(
                             child: Text(
                               "16",

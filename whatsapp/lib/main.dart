@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatsapp_clone/core/services/navigator_service.dart';
-import 'package:whatsapp_clone/lacator.dart';
+import 'package:whatsapp_clone/locator.dart';
 import 'package:whatsapp_clone/screens/sign_in_page.dart';
 import 'package:whatsapp_clone/screens/whatsapp_main.dart';
 import 'package:whatsapp_clone/viewmodels/sign_in_model.dart';
