@@ -18,10 +18,10 @@ class ContactsModel extends BaseModel {
   Future<void> startConversation(Profile profile) async {
     var user = await currentUser;
 
-    var conversationId = await _chatService.startConversation(user, profile);
+    var conversation = await _chatService.startConversation(user, profile);
 
     navigatorService.navigateTo(ConversationPage(
-      conversationId: conversationId,
+      conversation: conversation,
       userId: user.uid,
     ));
   }

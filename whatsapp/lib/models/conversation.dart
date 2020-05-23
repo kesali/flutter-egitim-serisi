@@ -1,14 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:whatsapp_clone/models/profile.dart';
 
 class Conversation {
   String id;
-  String name;
+  String userName;
   String profileImage;
   String displayMessage;
 
-  Conversation(this.id, this.name, this.profileImage, this.displayMessage);
+  Conversation(
+    this.id,
+    this.userName,
+    this.profileImage,
+    this.displayMessage,
+  );
 
-  factory Conversation.fromSnapshot(DocumentSnapshot snapshop) {
-    return Conversation(snapshop.documentID, '', '', snapshop.data['displayMessage']);
+  factory Conversation.fromSnapshot(
+      DocumentSnapshot snapshot, Profile otherUser) {
+    return Conversation(
+      snapshot.documentID,
+      otherUser.userName,
+      otherUser.profileImage,
+      snapshot.data['displayMessage'],
+    );
   }
 }

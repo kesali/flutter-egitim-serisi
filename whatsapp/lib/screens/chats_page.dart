@@ -33,8 +33,8 @@ class ChatsPage extends StatelessWidget {
                   (conversation) => ListTile(
                     leading: CircleAvatar(
                         backgroundImage:
-                            NetworkImage('https://placekitten.com/200/200')),
-                    title: Text('Dali'),
+                            NetworkImage(conversation.profileImage)),
+                    title: Text(conversation.userName),
                     subtitle:
                         Container(child: Text(conversation.displayMessage)),
                     onTap: () {
@@ -42,7 +42,7 @@ class ChatsPage extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => ConversationPage(
-                            conversationId: conversation.id,
+                            conversation: conversation,
                             userId: user.uid,
                           ),
                         ),

@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
+import 'package:whatsapp_clone/models/conversation.dart';
 
 class ConversationPage extends StatefulWidget {
-  final String conversationId;
+  final Conversation conversation;
   final String userId;
 
-  const ConversationPage({Key key, this.conversationId, this.userId}) : super(key: key);
+  const ConversationPage({Key key, this.conversation, this.userId})
+      : super(key: key);
 
   @override
   _ConversationPageState createState() => _ConversationPageState();
@@ -31,7 +33,8 @@ class _ConversationPageState extends State<ConversationPage> {
       },
     );
 
-    _ref = Firestore.instance.collection('conversations/${widget.conversationId}/messages');
+    _ref = Firestore.instance
+        .collection('conversations/${widget.conversation.id}/messages');
 
     super.initState();
   }
@@ -45,11 +48,11 @@ class _ConversationPageState extends State<ConversationPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             CircleAvatar(
-              backgroundImage: NetworkImage("https://placekitten.com/200/200"),
+              backgroundImage: NetworkImage(widget.conversation.profileImage),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 8.0),
-              child: Text("Emma Amanda"),
+              child: Text(widget.conversation.userName),
             ),
           ],
         ),
@@ -80,32 +83,40 @@ class _ConversationPageState extends State<ConversationPage> {
             Expanded(
               child: StreamBuilder(
                 stream: _ref.orderBy('timeStamp').snapshots(),
-                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) => !snapshot.hasData
-                    ? CircularProgressIndicator()
-                    : ListView(
-                        controller: _scrollController,
-                        children: snapshot.data.documents
-                            .map(
-                              (document) => ListTile(
-                                title: Align(
-                                    alignment: widget.userId == document['senderId']
-                                        ? Alignment.centerRight
-                                        : Alignment.bottomLeft,
-                                    child: Container(
-                                        padding: EdgeInsets.all(8),
-                                        decoration: BoxDecoration(
-                                            color: Theme.of(context).primaryColor,
-                                            borderRadius: BorderRadius.horizontal(
+                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) =>
+                    !snapshot.hasData
+                        ? CircularProgressIndicator()
+                        : ListView(
+                            controller: _scrollController,
+                            children: snapshot.data.documents
+                                .map(
+                                  (document) => ListTile(
+                                    title: Align(
+                                        alignment: widget.userId ==
+                                                document['senderId']
+                                            ? Alignment.centerRight
+                                            : Alignment.bottomLeft,
+                                        child: Container(
+                                            padding: EdgeInsets.all(8),
+                                            decoration: BoxDecoration(
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                              borderRadius:
+                                                  BorderRadius.horizontal(
                                                 left: Radius.circular(10),
-                                                right: Radius.circular(10))),
-                                        child: Text(
-                                          document['message'],
-                                          style: TextStyle(color: Colors.white),
-                                        ))),
-                              ),
-                            )
-                            .toList(),
-                      ),
+                                                right: Radius.circular(10),
+                                              ),
+                                            ),
+                                            child: Text(
+                                              document['message'],
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ))),
+                                  ),
+                                )
+                                .toList(),
+                          ),
               ),
             ),
             Row(
@@ -133,8 +144,9 @@ class _ConversationPageState extends State<ConversationPage> {
                         Expanded(
                             child: TextField(
                           controller: _controller,
-                          decoration:
-                              InputDecoration(hintText: "Type a message", border: InputBorder.none),
+                          decoration: InputDecoration(
+                              hintText: "Type a message",
+                              border: InputBorder.none),
                         )),
                         InkWell(
                           onTap: () {},
