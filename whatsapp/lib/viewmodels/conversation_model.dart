@@ -14,7 +14,7 @@ class ConversationModel extends BaseModel {
   CollectionReference _ref;
 
   Stream<QuerySnapshot> getConversation(String id) {
-    _ref = Firestore.instance.collection('conversations/$id/messages');
+    _ref = FirebaseFirestore.instance.collection('conversations/$id/messages');
 
     return _ref.orderBy('timeStamp').snapshots();
   }

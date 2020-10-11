@@ -92,7 +92,7 @@ class _ConversationPageState extends State<ConversationPage> {
                           ? CircularProgressIndicator()
                           : ListView(
                               controller: _scrollController,
-                              children: snapshot.data.documents
+                              children: snapshot.data.docs
                                   .map(
                                     (document) => ListTile(
                                       title: Align(

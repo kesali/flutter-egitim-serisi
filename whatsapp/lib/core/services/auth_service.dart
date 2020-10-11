@@ -3,11 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final Firestore _firestore = Firestore.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<FirebaseUser> get currentUser => _auth.currentUser();
+  User get currentUser => _auth.currentUser;
 
-  Future<FirebaseUser> signInAnonymously() async {
+  Future<User> signInAnonymously() async {
     try {
       var user = await _auth.signInAnonymously();
 
@@ -17,8 +17,8 @@ class AuthService {
     }
   }
 
-  Future<void> setUserProfile(FirebaseUser user, String userName) async {
-    await _firestore.collection('profile').document(user.uid).setData(
+  Future<void> setUserProfile(User user, String userName) async {
+    await _firestore.collection('profile').doc(user.uid).set(
         {'image': 'https://placekitten.com/200/200', 'userName': userName});
   }
 

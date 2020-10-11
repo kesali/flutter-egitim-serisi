@@ -19,7 +19,7 @@ abstract class BaseModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<FirebaseUser> get currentUser => authService.currentUser;
+  User get currentUser => authService.currentUser;
 
   void goBack() {
     navigatorService.pop();

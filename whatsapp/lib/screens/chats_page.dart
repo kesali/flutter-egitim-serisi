@@ -5,6 +5,7 @@ import 'package:whatsapp_clone/locator.dart';
 import 'package:whatsapp_clone/models/conversation.dart';
 import 'package:whatsapp_clone/screens/conversation_page.dart';
 import 'package:whatsapp_clone/viewmodels/chat_model.dart';
+import 'package:whatsapp_clone/viewmodels/sign_in_model.dart';
 
 class ChatsPage extends StatelessWidget {
   const ChatsPage({Key key}) : super(key: key);
@@ -12,7 +13,7 @@ class ChatsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = getIt<ChatModel>();
-    final user = Provider.of<FirebaseUser>(context);
+    final user = Provider.of<SignInModel>(context).currentUser;
 
     return ChangeNotifierProvider(
       create: (context) => model,

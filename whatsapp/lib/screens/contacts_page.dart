@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:whatsapp_clone/locator.dart';
 import 'package:whatsapp_clone/models/profile.dart';
 import 'package:whatsapp_clone/viewmodels/contacts_model.dart';

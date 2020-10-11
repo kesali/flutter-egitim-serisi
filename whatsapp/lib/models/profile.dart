@@ -9,7 +9,7 @@ class Profile {
 
   factory Profile.fromSnapshot(DocumentSnapshot snapshot) {
     return Profile(
-        id: snapshot.documentID,
+        id: snapshot.id,
         userName: snapshot['userName'],
         profileImage: snapshot['image']);
   }

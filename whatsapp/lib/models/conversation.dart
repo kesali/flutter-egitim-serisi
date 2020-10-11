@@ -17,10 +17,10 @@ class Conversation {
   factory Conversation.fromSnapshot(
       DocumentSnapshot snapshot, Profile otherUser) {
     return Conversation(
-      snapshot.documentID,
+      snapshot.id,
       otherUser.userName,
       otherUser.profileImage,
-      snapshot.data['displayMessage'],
+      snapshot.data()['displayMessage'],
     );
   }
 }

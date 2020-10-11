@@ -5,7 +5,7 @@ import 'package:whatsapp_clone/models/conversation.dart';
 import 'package:whatsapp_clone/models/profile.dart';
 
 class ChatService {
-  final Firestore _firestore = Firestore.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Stream<List<Conversation>> getConversations(String userId) {
     var ref = _firestore
@@ -20,8 +20,8 @@ class ChatService {
         conversationsStream,
         profilesStream,
         (QuerySnapshot conversationSnapshot, List<Profile> profiles) =>
-            conversationSnapshot.documents.map((snapshop) {
-              List<String> members = List.from(snapshop.data['members']);
+            conversationSnapshot.docs.map((snapshop) {
+              List<String> members = List.from(snapshop.data()['members']);
 
               var otherUser = profiles.firstWhere(
                 (profile) =>
@@ -38,15 +38,15 @@ class ChatService {
   Future<List<Profile>> getProfiles() async {
     var ref = _firestore.collection('profile').orderBy('userName');
 
-    var profiles = await ref.getDocuments();
+    var profiles = await ref.get();
 
-    return profiles.documents
+    return profiles.docs
         .map((snapshot) => Profile.fromSnapshot(snapshot))
         .toList();
   }
 
   Future<Conversation> startConversation(
-    FirebaseUser user,
+    User user,
     Profile profile,
   ) async {
     var ref = _firestore.collection('conversations');
@@ -57,7 +57,7 @@ class ChatService {
     });
 
     return Conversation(
-      documentRef.documentID,
+      documentRef.id,
       profile.userName,
       profile.profileImage,
       '',
