@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatsapp_clone/core/services/navigator_service.dart';
@@ -14,15 +15,32 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   if (USE_FIRESTORE_EMULATOR) {
-    FirebaseFirestore.instance.settings = Settings(
-        host: 'localhost:8080', sslEnabled: false, persistenceEnabled: false);
+    FirebaseFirestore.instance.settings =
+        Settings(host: 'localhost:8080', sslEnabled: false, persistenceEnabled: false);
   }
   setupLocators();
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final FirebaseMessaging _fcm = FirebaseMessaging();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _fcm.configure(
+      onMessage: (message) async {
+        print("onMessage: $message");
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
