@@ -34,6 +34,8 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
+    _fcm.getToken().then((value) => print(value));
+
     _fcm.configure(
       onMessage: (message) async {
         print("onMessage: $message");

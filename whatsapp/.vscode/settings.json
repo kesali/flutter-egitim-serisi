@@ -1,3 +1,9 @@
 {
-    "cSpell.enabled": false
+    "cSpell.enabled": false,
+    "eslint.workingDirectories": [
+        {
+            "directory": "functions",
+            "changeProcessCWD": true
+        }
+    ]
 }
