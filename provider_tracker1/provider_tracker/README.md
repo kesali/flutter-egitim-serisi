@@ -1,6 +1,5 @@
-# provider_tracker
-
-A new Flutter project.
+# Vücut Ağırlığı Takip Uygulaması
+Youtube'daki [Flutter Provider paketi ile State Management nasıl yapılır?](https://youtu.be/kcnygitJDt8) başlıklı videoda yapılan kilo takip programının kaynak kodlarıdır. Bu videoda Flutter favorite Packages programına seçilen paketlerden biri olan ve kullanılması birçok kişi tarafından önerilen  [provider](https://pub.dev/packages/provider) paketinin kullanımından ve bu paketin projeler için sağlayacağı faydalardan bahsedilmiştir. 
 
 ## Getting Started
 
