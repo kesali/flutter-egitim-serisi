@@ -4,32 +4,38 @@ import * as admin from 'firebase-admin';
 admin.initializeApp();
 const db = admin.firestore();
 
-export const sendNotifications = functions.firestore
-    .document("conversations/{conversationId}/messages/{messageId}")
-    .onCreate(async (snapshot, context) => {
-        const { message, senderId } = snapshot.data();
-        const { conversationId } = context.params;
+exports.sendNotifications = functions.firestore
+  .document('conversations/{conversationId}/messages/{messageId}')
+  .onCreate(async (snapshot, context) => {
+    const { message, senderId } = snapshot.data();
 
-        const conversation = await db.collection("conversations").doc(conversationId).get();
+    const { conversationId } = context.params;
 
-        const members :string[] = conversation.get("members");
+    const conversation = await db
+      .collection('conversations')
+      .doc(conversationId)
+      .get();
 
-        members.filter(member => member !== senderId).forEach(async (value, index) => {
-            const profile = await db.collection("profile").doc(value).get();
-            const token = profile.get("token");
+    const members: string[] = conversation.get('members');
 
-            if (!token) {
-                return;
-            }
+    members
+      .filter((member) => member !== senderId)
+      .map(async (member) => {
+        const profile = await db.collection('profile').doc(member).get();
+        const token = profile.get('token');
 
-            await admin.messaging().sendToDevice(token, {
-                data: {
-                    conversationId,
-                },
-                notification: {
-                    title: "You have a message",
-                    body: message,
-                },
-            });
+        if (!token) {
+          return;
+        }
+
+        await admin.messaging().sendToDevice(token, {
+          data: {
+            conversationId,
+          },
+          notification: {
+            title: 'Youe have a message',
+            body: message,
+          },
         });
-     });
+      });
+  });

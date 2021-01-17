@@ -2,8 +2,7 @@
     "cSpell.enabled": false,
     "eslint.workingDirectories": [
         {
-            "directory": "functions",
-            "changeProcessCWD": true
+            "directory": "functions"
         }
     ]
 }
