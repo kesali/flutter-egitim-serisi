@@ -8,9 +8,7 @@ class ChatService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Stream<List<Conversation>> getConversations(String userId) {
-    var ref = _firestore
-        .collection('conversations')
-        .where('members', arrayContains: userId);
+    var ref = _firestore.collection('conversations').where('members', arrayContains: userId);
 
     var profilesStream = getProfiles().asStream();
 
@@ -19,8 +17,7 @@ class ChatService {
     return Rx.combineLatest2(
         conversationsStream,
         profilesStream,
-        (QuerySnapshot conversationSnapshot, List<Profile> profiles) =>
-            conversationSnapshot.docs.map((snapshop) {
+        (QuerySnapshot conversationSnapshot, List<Profile> profiles) => conversationSnapshot.docs.map((snapshop) {
               List<String> members = List.from(snapshop.data()['members']);
 
               var otherUser = profiles.firstWhere(
@@ -40,9 +37,7 @@ class ChatService {
 
     var profiles = await ref.get();
 
-    return profiles.docs
-        .map((snapshot) => Profile.fromSnapshot(snapshot))
-        .toList();
+    return profiles.docs.map((snapshot) => Profile.fromSnapshot(snapshot)).toList();
   }
 
   Future<Conversation> startConversation(
@@ -62,5 +57,11 @@ class ChatService {
       profile.profileImage,
       '',
     );
+  }
+
+  Future<Conversation> getConversation(String conversationId, String memberId) async {
+    var profileSnapshot = await _firestore.collection('profile').doc(memberId).get();
+    var profile = Profile.fromSnapshot(profileSnapshot);
+    return Conversation(conversationId, profile.userName, profile.profileImage, '');
   }
 }

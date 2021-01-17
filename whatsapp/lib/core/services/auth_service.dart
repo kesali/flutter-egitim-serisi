@@ -17,9 +17,11 @@ class AuthService {
     }
   }
 
-  Future<void> setUserProfile(User user, String userName) async {
-    await _firestore.collection('profile').doc(user.uid).set(
-        {'image': 'https://placekitten.com/200/200', 'userName': userName});
+  Future<void> setUserProfile(User user, String userName, String token) async {
+    await _firestore
+        .collection('profile')
+        .doc(user.uid)
+        .set({'image': 'https://placekitten.com/200/200', 'userName': userName, 'token': token});
   }
 
   Future<void> signOut() async {

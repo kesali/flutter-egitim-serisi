@@ -12,8 +12,7 @@ class ConversationPage extends StatefulWidget {
   final Conversation conversation;
   final String userId;
 
-  const ConversationPage({Key key, this.conversation, this.userId})
-      : super(key: key);
+  const ConversationPage({Key key, this.conversation, this.userId}) : super(key: key);
 
   @override
   _ConversationPageState createState() => _ConversationPageState();
@@ -87,73 +86,64 @@ class _ConversationPageState extends State<ConversationPage> {
               Expanded(
                 child: StreamBuilder(
                   stream: model.getConversation(widget.conversation.id),
-                  builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) =>
-                      !snapshot.hasData
-                          ? CircularProgressIndicator()
-                          : ListView(
-                              controller: _scrollController,
-                              children: snapshot.data.docs
-                                  .map(
-                                    (document) => ListTile(
-                                      title: Align(
-                                        alignment: Alignment.bottomRight,
-                                        child: document['media'] == null ||
-                                                document['media']
-                                                    .toString()
-                                                    .isEmpty
-                                            ? Container()
-                                            : SizedBox(
-                                                height: 200,
-                                                child: Image.network(
-                                                  document['media'],
-                                                ),
-                                              ),
+                  builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) => !snapshot.hasData
+                      ? CircularProgressIndicator()
+                      : ListView(
+                          controller: _scrollController,
+                          children: snapshot.data.docs
+                              .map(
+                                (document) => ListTile(
+                                  title: Align(
+                                    alignment: Alignment.bottomRight,
+                                    child: document['media'] == null || document['media'].toString().isEmpty
+                                        ? Container()
+                                        : SizedBox(
+                                            height: 200,
+                                            child: Image.network(
+                                              document['media'],
+                                            ),
+                                          ),
+                                  ),
+                                  subtitle: Align(
+                                    alignment: widget.userId == document['senderId']
+                                        ? Alignment.centerRight
+                                        : Alignment.bottomLeft,
+                                    child: Container(
+                                      padding: EdgeInsets.all(8),
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context).primaryColor,
+                                        borderRadius: BorderRadius.horizontal(
+                                          left: Radius.circular(10),
+                                          right: Radius.circular(10),
+                                        ),
                                       ),
-                                      subtitle: Align(
-                                        alignment: widget.userId ==
-                                                document['senderId']
-                                            ? Alignment.centerRight
-                                            : Alignment.bottomLeft,
-                                        child: Container(
-                                          padding: EdgeInsets.all(8),
-                                          decoration: BoxDecoration(
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                            borderRadius:
-                                                BorderRadius.horizontal(
-                                              left: Radius.circular(10),
-                                              right: Radius.circular(10),
-                                            ),
-                                          ),
-                                          child: Text(
-                                            document['message'],
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                            ),
-                                          ),
+                                      child: Text(
+                                        document['message'],
+                                        style: TextStyle(
+                                          color: Colors.white,
                                         ),
                                       ),
                                     ),
-                                  )
-                                  .toList(),
-                            ),
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                        ),
                 ),
               ),
               Consumer<ConversationModel>(
-                builder: (BuildContext context, ConversationModel value,
-                        Widget child) =>
-                    model.uploadedMedia.isNotEmpty
-                        ? Padding(
-                            padding: const EdgeInsets.only(right: 8),
-                            child: Align(
-                              alignment: Alignment.bottomRight,
-                              child: SizedBox(
-                                height: 100,
-                                child: Image.network(model.uploadedMedia),
-                              ),
-                            ),
-                          )
-                        : Container(),
+                builder: (BuildContext context, ConversationModel value, Widget child) => model.uploadedMedia.isNotEmpty
+                    ? Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: Align(
+                          alignment: Alignment.bottomRight,
+                          child: SizedBox(
+                            height: 100,
+                            child: Image.network(model.uploadedMedia),
+                          ),
+                        ),
+                      )
+                    : Container(),
               ),
               Row(
                 children: <Widget>[
@@ -173,32 +163,26 @@ class _ConversationPageState extends State<ConversationPage> {
                           InkWell(
                             onTap: () {},
                             child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8),
+                              padding: const EdgeInsets.symmetric(horizontal: 8),
                               child: Icon(Icons.tag_faces, color: Colors.grey),
                             ),
                           ),
                           Expanded(
                               child: TextField(
                             controller: _controller,
-                            decoration: InputDecoration(
-                                hintText: "Type a message",
-                                border: InputBorder.none),
+                            decoration: InputDecoration(hintText: "Type a message", border: InputBorder.none),
                           )),
                           InkWell(
                             onTap: () => model.uploadMedia(ImageSource.gallery),
                             child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8),
-                              child:
-                                  Icon(Icons.attach_file, color: Colors.grey),
+                              padding: const EdgeInsets.symmetric(horizontal: 8),
+                              child: Icon(Icons.attach_file, color: Colors.grey),
                             ),
                           ),
                           InkWell(
                             onTap: () => model.uploadMedia(ImageSource.camera),
                             child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8),
+                              padding: const EdgeInsets.symmetric(horizontal: 8),
                               child: Icon(Icons.camera_alt, color: Colors.grey),
                             ),
                           ),
@@ -225,6 +209,12 @@ class _ConversationPageState extends State<ConversationPage> {
                           'timeStamp': DateTime.now(),
                           'media': model.uploadedMedia,
                         });
+
+                        _scrollController.animateTo(
+                          _scrollController.position.maxScrollExtent,
+                          duration: Duration(milliseconds: 200),
+                          curve: Curves.easeIn,
+                        );
 
                         _controller.text = '';
                       },
