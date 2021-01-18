@@ -31,10 +31,13 @@ exports.sendNotifications = functions.firestore
         await admin.messaging().sendToDevice(token, {
           data: {
             conversationId,
+            userId: member,
+            senderId,
           },
           notification: {
-            title: 'Youe have a message',
+            title: 'You have a message',
             body: message,
+            clickAction: 'FLUTTER_NOTIFICATION_CLICK',
           },
         });
       });

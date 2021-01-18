@@ -54,4 +54,10 @@ class ChatService {
       profileImage: profile.image,
     );
   }
+
+  Future<Conversation> getConversation(String conversationId, String userId) async {
+    var profileSnapshot = await _firestore.collection('profile').doc(userId).get();
+    var profile = Profile.fromSnapshot(profileSnapshot);
+    return Conversation(id: conversationId, name: profile.userName, profileImage: profile.image, displayMassage: '');
+  }
 }
