@@ -25,8 +25,16 @@ class _ContactPageState extends State<ContactPage> {
         title: Text("Phone Book"),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => AddContactPage(contact: Contact())));
+        onPressed: () async {
+          await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AddContactPage(
+                contact: Contact(),
+              ),
+            ),
+          );
+          setState(() {});
         },
         child: Icon(Icons.add),
       ),
@@ -41,7 +49,14 @@ class _ContactPageState extends State<ContactPage> {
                 Contact contact = snapshot.data[index];
                 return GestureDetector(
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => AddContactPage(contact: contact,)));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AddContactPage(
+                          contact: contact,
+                        ),
+                      ),
+                    );
                   },
                   child: Dismissible(
                     key: UniqueKey(),
@@ -51,7 +66,10 @@ class _ContactPageState extends State<ContactPage> {
                       color: Colors.red,
                       child: Padding(
                         padding: const EdgeInsets.all(16),
-                        child: Icon(Icons.delete, color: Colors.white,),
+                        child: Icon(
+                          Icons.delete,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                     onDismissed: (direction) async {
@@ -83,7 +101,10 @@ class _ContactPageState extends State<ContactPage> {
                       ),
                       title: Text(contact.name),
                       subtitle: Text(contact.phoneNumber),
-                      trailing: IconButton(icon: Icon(Icons.phone), onPressed: () async => _callContact(contact.phoneNumber)),
+                      trailing: IconButton(
+                        icon: Icon(Icons.phone),
+                        onPressed: () async => _callContact(contact.phoneNumber),
+                      ),
                     ),
                   ),
                 );
@@ -95,7 +116,7 @@ class _ContactPageState extends State<ContactPage> {
 
   _callContact(String phoneNumber) async {
     String tel = "tel:$phoneNumber";
-    if(await canLaunch(tel)){
+    if (await canLaunch(tel)) {
       await launch(tel);
     }
   }
